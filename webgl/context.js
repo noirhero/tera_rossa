@@ -1,4 +1,4 @@
-// Copyright TAP, Inc. All Rights Reserved.
+// Copyright 2018 TAP, Inc. All Rights Reserved.
 
 class WebGLContext {
   constructor() {
@@ -43,5 +43,21 @@ class WebGLContext {
     gl.bufferData(target, src, usage);
 
     return buffer;
+  }
+
+  CreateProgram(vs, fs)
+  {
+    const gl = this.gl_;
+
+    let program = gl.createProgram();
+    gl.attachShader(program, vs);
+    gl.attachShader(program, fs);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      alert('Prgram link failed.');
+      program = null;
+    }
+
+    return program;
   }
 }

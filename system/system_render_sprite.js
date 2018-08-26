@@ -1,14 +1,33 @@
-// Copyright TAP, Inc. All Rights Reserved.
+// Copyright 2018 TAP, Inc. All Rights Reserved.
 
 const SystemRenderSprite = CES.System.extend({
   init: function(context) {
-    this.context_ = context;
-    this.textures_ = {};
+    const gl = context.GL;
+
+    this.vs_ = context.CreateShader([
+      'attribute vec3 world_pos;',
+      'attribute vec2 tex_coord;',
+      'attribute float tex_index;',
+
+      'uniform mat4 vp_transform;',
+
+      'varying vec2 out_tex_coord;',
+      'varying float out_tex_index;',
+
+      'void main() {',
+      ' gl_Position = vp_transform * vec4(world_pos, 1.0);',
+      ' out_tex_coord = tex_coord;',
+      ' out_tex_index = tex_index;',
+      '}',
+    ].join('\n'), gl.VERTEX_SHADER);
+
+    this.gl_ = gl;
   },
   update: function() {
-    const gl = this.context_.GL;
+    const gl = this.gl_;
+    const world = this.world;
 
-    const entity_viewports = this.world.getEntities('Viewport');
+    const entity_viewports = world.getEntities('Viewport');
     if(0 === entity_viewports) {
       return;
     }
@@ -18,5 +37,9 @@ const SystemRenderSprite = CES.System.extend({
 
     gl.enable(gl.DEPTH_TEST);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    world.getEntities('Scale2', 'Pos2', 'Texture').forEach(function(entity) {
+
+    });
   }
 });
