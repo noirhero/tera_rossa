@@ -3,6 +3,9 @@
 class WebGLContext {
   constructor() {
     const canvas = document.getElementById('main_canvas');
+    canvas.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    canvas.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
     const gl = canvas.getContext('webgl', {
       premultipliedAlpha: false,
       antialias: false,
@@ -19,4 +22,6 @@ class WebGLContext {
   get GL() {
     return this.gl_;
   }
+
+
 }

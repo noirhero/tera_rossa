@@ -11,7 +11,7 @@ class Timer {
   Update() {
     const now = Date.now();
     this.delta_ms_ = now - this.prev_;
-    this.delta_ = this.delta_ * 0.001;
+    this.delta_ = this.delta_ms_ * 0.001;
     this.prev_ = now;
   }
 
