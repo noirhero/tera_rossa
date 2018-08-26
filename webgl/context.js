@@ -3,9 +3,6 @@
 class WebGLContext {
   constructor() {
     const canvas = document.getElementById('main_canvas');
-    canvas.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    canvas.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-
     const gl = canvas.getContext('webgl', {
       premultipliedAlpha: false,
       antialias: false,
@@ -23,5 +20,28 @@ class WebGLContext {
     return this.gl_;
   }
 
+  CreateShader(src, type) {
+    const gl = this.gl_;
 
+    let shader = gl.createShader(type);
+    gl.shaderSource(shader, src);
+    gl.compileShader(shader);
+
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      alert('Compile shader failed.\n' + src + '\n' + gl.getShaderInfoLog(shader));
+      shader = null;
+    }
+
+    return shader;
+  }
+
+  CreateBuffer(target, src, usage) {
+    const gl = this.gl_;
+
+    let buffer = gl.createBuffer();
+    gl.bindBuffer(target, buffer);
+    gl.bufferData(target, src, usage);
+
+    return buffer;
+  }
 }
