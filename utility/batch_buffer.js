@@ -1,7 +1,7 @@
 // Copyright 2018 TAP, Inc. All Rights Reserved.
 
 const GNumBatch = 10;
-const GBatchQuadV_XYZUVI = new Float32Array(GNumBatch * 24/*xyz uv i*/ * 4/*quad*/);
+const GBatchQuadV_XYZUV = new Float32Array(GNumBatch * 20/*xyz uv*/ * 4/*quad*/);
 const GBatchQuadI = function() {
   const indices_ = new Uint16Array(GNumBatch * 6/*two polygon*/);
 
@@ -18,4 +18,4 @@ const GBatchQuadI = function() {
     offset_idx += 4/*quad*/;
   }
   return indices_;
-};
+}();

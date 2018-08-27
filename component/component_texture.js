@@ -19,12 +19,20 @@ function Texture(url, gl) {
 
     image_ = null;
   }
-
   image_.onload = OnLoadImage_;
   image_.src = url;
+
+  this.IsLoaded = function() {
+    return (null !== image_) ? false : true;
+  };
+
+  this.GetTexture = function() {
+    return texture_;
+  };
 }
 
 const ComponentTexture = CES.Component.extend({
+  name: 'Texture',
   init: function(url, gl) {
     let texture = GTextures[url];
     if(!texture) {
