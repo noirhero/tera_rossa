@@ -53,6 +53,7 @@ class WebGLContext {
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
     gl.linkProgram(program);
+
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
       alert('Prgram link failed.');
       program = null;

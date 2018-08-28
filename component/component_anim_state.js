@@ -46,6 +46,36 @@ function Animation(url) {
   }
 
   ReadFile(url, OnLoadAnimation_);
+
+  this.GetTextureCoordinate = function(state, duration) {
+    function RecursiveFind_(frames, duration, start, end) {
+      const step = end - start;
+      const offset = (0 === (step % 2)) ? 0 : 1;
+      const pivot = start + Math.round(step / 2) - offset;
+
+      const frame = frames[pivot];
+      if(frame.start > duration) {
+        return RecursiveFind_(frames, duration, start, pivot);
+      }
+      else if(frame.end < duration) {
+        return RecursiveFind_(frames, duration, pivot, end);
+      }
+
+      return frame.rect;
+    }
+
+    const frame_info = this.frame_infos_[state];
+    if(!frame_info) {
+      return GEmptyTexcoord;
+    }
+
+    if(frame_info.total_duration < duration) {
+      duration %= frame_info.total_duration;
+    }
+
+    const frames = frame_info.frames;
+    return RecursiveFind_(frames, duration, 0, frames.length);
+  };
 }
 
 const ComponentAnimState = CES.Component.extend({
