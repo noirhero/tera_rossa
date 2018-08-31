@@ -35,10 +35,10 @@ function Animation(url) {
         start: frame_info.total_duration * 0.001,
         end: (frame_info.total_duration + src_frame.duration) * 0.001,
         rect: [
-          left, top,
-          right, top,
-          left, bottom,
-          right, bottom,
+          vec2.fromValues(left, top),
+          vec2.fromValues(right, top),
+          vec2.fromValues(left, bottom),
+          vec2.fromValues(right, bottom),
         ],
       };
       frame_info.total_duration += src_frame.duration * 0.001;

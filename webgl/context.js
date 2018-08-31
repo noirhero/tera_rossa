@@ -45,8 +45,7 @@ class WebGLContext {
     return buffer;
   }
 
-  CreateProgram(vs, fs)
-  {
+  CreateProgram(vs, fs) {
     const gl = this.gl_;
 
     let program = gl.createProgram();

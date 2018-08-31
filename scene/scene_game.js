@@ -19,6 +19,7 @@ class SceneGame extends Scene {
     entity_tile.addComponent(new ComponentScale(200, 200));
     entity_tile.addComponent(new ComponentPos());
     entity_tile.addComponent(new ComponentTexture('data/texture/dungeon_tile.png', context.GL));
+    entity_tile.addComponent(new ComponentTexcoord());
     world.addEntity(entity_tile);
 
     this.DefaultContextStates_();

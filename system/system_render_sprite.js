@@ -79,12 +79,13 @@ const SystemRenderSprite = CES.System.extend({
     let texture = null;
     let scale = null;
     let pos = null;
+    let texcoord = null;
 
     let num_draw = 0;
     let offset = 0;
     let world_transform = mat4.create();
     let world_pos = vec3.create();
-    world.getEntities('Scale', 'Pos', 'Texture').forEach(function(entity) {
+    world.getEntities('Scale', 'Pos', 'Texture', 'Texcoord').forEach(function(entity) {
       texture = entity.getComponent('Texture').texture_;
       if(false === texture.IsLoaded()) {
         return;
@@ -95,6 +96,7 @@ const SystemRenderSprite = CES.System.extend({
 
       scale = entity.getComponent('Scale').scale_;
       pos = entity.getComponent('Pos').pos_;
+      texcoord = entity.getComponent('Texcoord').texcoord_;
 
       ++num_draw;
       mat4.fromRotationTranslationScale(world_transform, GQuatI, pos, scale);
@@ -105,8 +107,8 @@ const SystemRenderSprite = CES.System.extend({
         GBatchQuadV_XYZUV[offset++] = world_pos[0];
         GBatchQuadV_XYZUV[offset++] = world_pos[1];
         GBatchQuadV_XYZUV[offset++] = world_pos[2];
-        GBatchQuadV_XYZUV[offset++] = GEmptyTexcoord[i][0];
-        GBatchQuadV_XYZUV[offset++] = GEmptyTexcoord[i][1];
+        GBatchQuadV_XYZUV[offset++] = texcoord[i][0];
+        GBatchQuadV_XYZUV[offset++] = texcoord[i][1];
       }
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, GBatchQuadV_XYZUV);
     });
