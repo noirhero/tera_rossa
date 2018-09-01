@@ -17,10 +17,17 @@ class SceneGame extends Scene {
 
     const entity_tile = new CES.Entity();
     entity_tile.addComponent(new ComponentScale(200, 200));
-    entity_tile.addComponent(new ComponentPos());
+    entity_tile.addComponent(new ComponentPos(0, 0, 10));
     entity_tile.addComponent(new ComponentTexture('data/texture/dungeon_tile.png', context.GL));
     entity_tile.addComponent(new ComponentTexcoord());
     world.addEntity(entity_tile);
+
+    const entity_tile_1 = new CES.Entity();
+    entity_tile_1.addComponent(new ComponentScale(200, 200));
+    entity_tile_1.addComponent(new ComponentPos(100, 100, 9));
+    entity_tile_1.addComponent(new ComponentTexture('data/texture/dungeon_tile_1.png', context.GL));
+    entity_tile_1.addComponent(new ComponentTexcoord());
+    world.addEntity(entity_tile_1);
 
     this.DefaultContextStates_();
   }

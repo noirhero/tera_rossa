@@ -13,8 +13,8 @@ const ComponentViewport = CES.Component.extend({
     this.height_ = 0;
     this.width_ = 0;
     this.height_ = 0;
-    this.z_near_ = -1000;
-    this.z_far_ = 1000;
+    this.z_near_ = 1000;
+    this.z_far_ = -1000;
     this.transform_projection_ = mat4.create();
 
     this.transform_vp_ = mat4.create();

@@ -15,3 +15,5 @@ const GEmptyTexcoord = [
   vec2.fromValues(0.0, 0.0),
   vec2.fromValues(1.0, 0.0),
 ];
+
+const GLimitTexture = 8; // iphone 5s, samsung galaxy note 3
