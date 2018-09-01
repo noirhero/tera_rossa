@@ -32,8 +32,8 @@ function Animation(url) {
       const bottom = top - src_frame.frame.h / height;
 
       frame_info.frames[frame_info.frames.length] = {
-        start: frame_info.total_duration * 0.001,
-        end: (frame_info.total_duration + src_frame.duration) * 0.001,
+        start: frame_info.total_duration,
+        end: frame_info.total_duration + src_frame.duration * 0.001,
         rect: [
           vec2.fromValues(left, top),
           vec2.fromValues(right, top),
@@ -64,7 +64,7 @@ function Animation(url) {
       return frame.rect;
     }
 
-    const frame_info = this.frame_infos_[state];
+    const frame_info = frame_infos_[state];
     if(!frame_info) {
       return GEmptyTexcoord;
     }
@@ -87,7 +87,7 @@ const ComponentAnimState = CES.Component.extend({
     }
     this.anim_ = anim;
 
-    this.state_ = state;
-    this.duration_ = duration;
+    this.state_ = state || 'none';
+    this.duration_ = duration || 0;
   }
 });
