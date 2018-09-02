@@ -24,19 +24,27 @@ class SceneGame extends Scene {
 
     const entity_tera = new CES.Entity();
     entity_tera.addComponent(new ComponentScale(60, 90));
-    entity_tera.addComponent(new ComponentPos(-100, 40));
-    entity_tera.addComponent(new ComponentAnimState('data/animation/tera.json', 'idle-b', 0, true));
+    entity_tera.addComponent(new ComponentPos(100, 40));
+    entity_tera.addComponent(new ComponentAnimState('data/animation/tera.json', 'idle-b'));
     entity_tera.addComponent(new ComponentTexture('data/sprite/tera.png', context.GL));
     entity_tera.addComponent(new ComponentTexcoord());
     world.addEntity(entity_tera);
 
     const entity_rossa = new CES.Entity();
     entity_rossa.addComponent(new ComponentScale(60, 90));
-    entity_rossa.addComponent(new ComponentPos(100, 40));
-    entity_rossa.addComponent(new ComponentAnimState('data/animation/rossa.json', 'idle'));
+    entity_rossa.addComponent(new ComponentPos(-100, 40));
+    entity_rossa.addComponent(new ComponentAnimState('data/animation/rossa.json', 'idle', 0, true));
     entity_rossa.addComponent(new ComponentTexture('data/sprite/rossa.png', context.GL));
     entity_rossa.addComponent(new ComponentTexcoord());
     world.addEntity(entity_rossa);
+
+    const entity_skeleton = new CES.Entity();
+    entity_skeleton.addComponent(new ComponentScale(90, 100));
+    entity_skeleton.addComponent(new ComponentPos(130, 50));
+    entity_skeleton.addComponent(new ComponentAnimState('data/animation/skeleton.json', 'idle'));
+    entity_skeleton.addComponent(new ComponentTexture('data/sprite/skeleton.png', context.GL));
+    entity_skeleton.addComponent(new ComponentTexcoord());
+    world.addEntity(entity_skeleton);
 
     this.DefaultContextStates_();
   }
