@@ -15,20 +15,28 @@ class SceneGame extends Scene {
     entity_viewport.addComponent(new ComponentViewport());
     world.addEntity(entity_viewport);
 
-    const entity_tile = new CES.Entity();
-    entity_tile.addComponent(new ComponentScale(40, 40));
-    entity_tile.addComponent(new ComponentPos(0, 0, -100));
-    entity_tile.addComponent(new ComponentTexture('data/texture/dungeon_tile.png', context.GL));
-    entity_tile.addComponent(new ComponentTexcoord());
-    world.addEntity(entity_tile);
+    // const entity_tile = new CES.Entity();
+    // entity_tile.addComponent(new ComponentScale(40, 40));
+    // entity_tile.addComponent(new ComponentPos(0, 0, -100));
+    // entity_tile.addComponent(new ComponentTexture('data/texture/dungeon_tile.png', context.GL));
+    // entity_tile.addComponent(new ComponentTexcoord());
+    // world.addEntity(entity_tile);
 
-    const entity_man = new CES.Entity();
-    entity_man.addComponent(new ComponentScale(60, 90));
-    entity_man.addComponent(new ComponentPos(0, 40));
-    entity_man.addComponent(new ComponentAnimState('data/animation/man.json', 'idle-b'));
-    entity_man.addComponent(new ComponentTexture('data/sprite/man.png', context.GL));
-    entity_man.addComponent(new ComponentTexcoord());
-    world.addEntity(entity_man);
+    const entity_tera = new CES.Entity();
+    entity_tera.addComponent(new ComponentScale(60, 90));
+    entity_tera.addComponent(new ComponentPos(-100, 40));
+    entity_tera.addComponent(new ComponentAnimState('data/animation/tera.json', 'idle-b', 0, true));
+    entity_tera.addComponent(new ComponentTexture('data/sprite/tera.png', context.GL));
+    entity_tera.addComponent(new ComponentTexcoord());
+    world.addEntity(entity_tera);
+
+    const entity_rossa = new CES.Entity();
+    entity_rossa.addComponent(new ComponentScale(60, 90));
+    entity_rossa.addComponent(new ComponentPos(100, 40));
+    entity_rossa.addComponent(new ComponentAnimState('data/animation/rossa.json', 'idle'));
+    entity_rossa.addComponent(new ComponentTexture('data/sprite/rossa.png', context.GL));
+    entity_rossa.addComponent(new ComponentTexcoord());
+    world.addEntity(entity_rossa);
 
     this.DefaultContextStates_();
   }

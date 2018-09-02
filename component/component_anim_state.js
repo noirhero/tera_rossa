@@ -40,6 +40,12 @@ function Animation(url) {
           vec2.fromValues(left, bottom),
           vec2.fromValues(right, bottom),
         ],
+        reverse_rect: [
+          vec2.fromValues(right, top),
+          vec2.fromValues(left, top),
+          vec2.fromValues(right, bottom),
+          vec2.fromValues(left, bottom),
+        ],
       };
       frame_info.total_duration += src_frame.duration * 0.001;
     }
@@ -47,7 +53,7 @@ function Animation(url) {
 
   ReadFile(url, OnLoadAnimation_);
 
-  this.GetTextureCoordinate = function(state, duration) {
+  this.GetTextureCoordinate = function(state, duration, reverse_x) {
     function RecursiveFind_(frames, duration, start, end) {
       const step = end - start;
       const offset = (0 === (step % 2)) ? 0 : 1;
@@ -61,7 +67,7 @@ function Animation(url) {
         return RecursiveFind_(frames, duration, pivot, end);
       }
 
-      return frame.rect;
+      return (true === reverse_x) ? frame.reverse_rect : frame.rect;
     }
 
     const frame_info = frame_infos_[state];
@@ -80,7 +86,7 @@ function Animation(url) {
 
 const ComponentAnimState = CES.Component.extend({
   name: 'AnimState',
-  init: function(url, state, duration) {
+  init: function(url, state, duration, reverse_x) {
     let anim = GAnims[url];
     if(!anim) {
       GAnims[url] = anim = new Animation(url);
@@ -89,5 +95,6 @@ const ComponentAnimState = CES.Component.extend({
 
     this.state_ = state || 'none';
     this.duration_ = duration || 0;
+    this.reverse_x_ = reverse_x || false;
   }
 });

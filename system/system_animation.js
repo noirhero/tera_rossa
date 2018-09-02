@@ -10,7 +10,7 @@ const SystemAnimation = CES.System.extend({
       comp_anim_state.duration_ += dt;
 
       comp_texcoord = entity.getComponent('Texcoord');
-      comp_texcoord.texcoord_ = comp_anim_state.anim_.GetTextureCoordinate(comp_anim_state.state_, comp_anim_state.duration_);
+      comp_texcoord.texcoord_ = comp_anim_state.anim_.GetTextureCoordinate(comp_anim_state.state_, comp_anim_state.duration_, comp_anim_state.reverse_x_);
     });
   },
 
