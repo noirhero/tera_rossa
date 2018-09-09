@@ -31,6 +31,14 @@ class SceneGame extends Scene {
     entity_rossa.addComponent(new ComponentTexcoord());
     world.addEntity(entity_rossa);
 
+    const entity_sorcerer = new CES.Entity();
+    entity_sorcerer.addComponent(new ComponentScale(60, 85));
+    entity_sorcerer.addComponent(new ComponentPos(140, 38));
+    entity_sorcerer.addComponent(new ComponentAnimState('data/animation/sorcerer.json', 'idle'));
+    entity_sorcerer.addComponent(new ComponentTexture('data/sprite/sorcerer.png', context.GL));
+    entity_sorcerer.addComponent(new ComponentTexcoord());
+    world.addEntity(entity_sorcerer);
+
     this.DefaultContextStates_();
   }
 
