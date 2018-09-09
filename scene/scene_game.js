@@ -15,13 +15,6 @@ class SceneGame extends Scene {
     entity_viewport.addComponent(new ComponentViewport());
     world.addEntity(entity_viewport);
 
-    // const entity_tile = new CES.Entity();
-    // entity_tile.addComponent(new ComponentScale(40, 40));
-    // entity_tile.addComponent(new ComponentPos(0, 0, -100));
-    // entity_tile.addComponent(new ComponentTexture('data/texture/dungeon_tile.png', context.GL));
-    // entity_tile.addComponent(new ComponentTexcoord());
-    // world.addEntity(entity_tile);
-
     const entity_tera = new CES.Entity();
     entity_tera.addComponent(new ComponentScale(60, 90));
     entity_tera.addComponent(new ComponentPos(100, 40));
@@ -37,14 +30,6 @@ class SceneGame extends Scene {
     entity_rossa.addComponent(new ComponentTexture('data/sprite/rossa.png', context.GL));
     entity_rossa.addComponent(new ComponentTexcoord());
     world.addEntity(entity_rossa);
-
-    const entity_skeleton = new CES.Entity();
-    entity_skeleton.addComponent(new ComponentScale(90, 100));
-    entity_skeleton.addComponent(new ComponentPos(130, 50));
-    entity_skeleton.addComponent(new ComponentAnimState('data/animation/skeleton.json', 'idle'));
-    entity_skeleton.addComponent(new ComponentTexture('data/sprite/skeleton.png', context.GL));
-    entity_skeleton.addComponent(new ComponentTexcoord());
-    world.addEntity(entity_skeleton);
 
     this.DefaultContextStates_();
   }

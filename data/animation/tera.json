@@ -1,5 +1,5 @@
 { "frames": {
-   "idle-b 0.ase": {
+   "idle 0.ase": {
     "frame": { "x": 0, "y": 0, "w": 45, "h": 57 },
     "rotated": false,
     "trimmed": false,
@@ -7,7 +7,7 @@
     "sourceSize": { "w": 45, "h": 57 },
     "duration": 100
    },
-   "idle-b 1.ase": {
+   "idle 1.ase": {
     "frame": { "x": 45, "y": 0, "w": 45, "h": 57 },
     "rotated": false,
     "trimmed": false,
@@ -15,7 +15,7 @@
     "sourceSize": { "w": 45, "h": 57 },
     "duration": 100
    },
-   "idle-b 2.ase": {
+   "idle 2.ase": {
     "frame": { "x": 90, "y": 0, "w": 45, "h": 57 },
     "rotated": false,
     "trimmed": false,
@@ -23,7 +23,7 @@
     "sourceSize": { "w": 45, "h": 57 },
     "duration": 100
    },
-   "idle-b 3.ase": {
+   "idle 3.ase": {
     "frame": { "x": 135, "y": 0, "w": 45, "h": 57 },
     "rotated": false,
     "trimmed": false,

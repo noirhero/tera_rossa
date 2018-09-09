@@ -67,10 +67,10 @@ const SystemRenderSprite = CES.System.extend({
     const gl = this.gl_;
     const world = this.world;
     const s_sprite = this.s_sprite_;
+    const num_max_offset = GBatchQuadV_XYZIUV.length;
 
     let num_draw = 0;
     let offset = 0;
-    let current_texture = null;
     let bind_textures = [];
     let bind_texture_indices = [];
 
@@ -117,11 +117,17 @@ const SystemRenderSprite = CES.System.extend({
       gl.uniform1iv(s_sprite, bind_texture_indices);
 
       gl.drawElements(gl.TRIANGLES, num_draw * 6/*two polygon*/, gl.UNSIGNED_SHORT, 0);
+
+      num_draw = 0;
+      offset = 0;
+      bind_textures.length = 0;
+      bind_texture_indices.length = 0;
     }
 
     let scale = null;
     let pos = null;
     let texcoord = null;
+    let current_texture = null;
     let world_transform = mat4.create();
     let world_pos = vec3.create();
 
@@ -145,11 +151,6 @@ const SystemRenderSprite = CES.System.extend({
       if(null === texture_index) {
         if(GLimitTexture <= num_bind_textures) {
           Draw_.call(this);
-
-          num_draw = 0;
-          num_bind_textures = 0;
-          bind_textures.length = 0;
-          bind_texture_indices.length = 0;
         }
 
         bind_textures[num_bind_textures] = current_texture;
@@ -172,6 +173,10 @@ const SystemRenderSprite = CES.System.extend({
         GBatchQuadV_XYZIUV[offset++] = texcoord[i][0];
         GBatchQuadV_XYZIUV[offset++] = texcoord[i][1];
         GBatchQuadV_XYZIUV[offset++] = texture_index;
+      }
+
+      if(num_max_offset <= offset) {
+        Draw_.call(this);
       }
     });
 

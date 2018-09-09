@@ -1,0 +1,51 @@
+{ "frames": {
+   "idle.ase": {
+    "frame": { "x": 0, "y": 0, "w": 40, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
+    "sourceSize": { "w": 40, "h": 48 },
+    "duration": 100
+   },
+   "walk 0.ase": {
+    "frame": { "x": 40, "y": 0, "w": 40, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
+    "sourceSize": { "w": 40, "h": 48 },
+    "duration": 100
+   },
+   "walk 1.ase": {
+    "frame": { "x": 80, "y": 0, "w": 40, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
+    "sourceSize": { "w": 40, "h": 48 },
+    "duration": 100
+   },
+   "walk 2.ase": {
+    "frame": { "x": 0, "y": 48, "w": 40, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
+    "sourceSize": { "w": 40, "h": 48 },
+    "duration": 100
+   },
+   "walk 3.ase": {
+    "frame": { "x": 40, "y": 48, "w": 40, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
+    "sourceSize": { "w": 40, "h": 48 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.9",
+  "image": "socrcerer.png",
+  "format": "RGBA8888",
+  "size": { "w": 128, "h": 128 },
+  "scale": "1"
+ }
+}

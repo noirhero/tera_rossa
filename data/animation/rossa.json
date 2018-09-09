@@ -63,7 +63,7 @@
     "sourceSize": { "w": 39, "h": 53 },
     "duration": 100
    },
-   "skip 0.ase": {
+   "walk 0.ase": {
     "frame": { "x": 78, "y": 53, "w": 39, "h": 53 },
     "rotated": false,
     "trimmed": false,
@@ -71,7 +71,7 @@
     "sourceSize": { "w": 39, "h": 53 },
     "duration": 100
    },
-   "skip 1.ase": {
+   "walk 1.ase": {
     "frame": { "x": 117, "y": 53, "w": 39, "h": 53 },
     "rotated": false,
     "trimmed": false,
@@ -79,7 +79,7 @@
     "sourceSize": { "w": 39, "h": 53 },
     "duration": 100
    },
-   "skip 2.ase": {
+   "walk 2.ase": {
     "frame": { "x": 156, "y": 53, "w": 39, "h": 53 },
     "rotated": false,
     "trimmed": false,
@@ -87,7 +87,7 @@
     "sourceSize": { "w": 39, "h": 53 },
     "duration": 100
    },
-   "skip 3.ase": {
+   "walk 3.ase": {
     "frame": { "x": 195, "y": 53, "w": 39, "h": 53 },
     "rotated": false,
     "trimmed": false,
@@ -95,7 +95,7 @@
     "sourceSize": { "w": 39, "h": 53 },
     "duration": 100
    },
-   "skip 4.ase": {
+   "walk 4.ase": {
     "frame": { "x": 0, "y": 106, "w": 39, "h": 53 },
     "rotated": false,
     "trimmed": false,
@@ -103,7 +103,7 @@
     "sourceSize": { "w": 39, "h": 53 },
     "duration": 100
    },
-   "skip 5.ase": {
+   "walk 5.ase": {
     "frame": { "x": 39, "y": 106, "w": 39, "h": 53 },
     "rotated": false,
     "trimmed": false,
@@ -111,7 +111,7 @@
     "sourceSize": { "w": 39, "h": 53 },
     "duration": 100
    },
-   "skip 6.ase": {
+   "walk 6.ase": {
     "frame": { "x": 78, "y": 106, "w": 39, "h": 53 },
     "rotated": false,
     "trimmed": false,
@@ -119,7 +119,7 @@
     "sourceSize": { "w": 39, "h": 53 },
     "duration": 100
    },
-   "skip 7.ase": {
+   "walk 7.ase": {
     "frame": { "x": 117, "y": 106, "w": 39, "h": 53 },
     "rotated": false,
     "trimmed": false,
