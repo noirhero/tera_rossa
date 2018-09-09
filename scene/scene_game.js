@@ -18,7 +18,7 @@ class SceneGame extends Scene {
     const entity_tera = new CES.Entity();
     entity_tera.addComponent(new ComponentScale(60, 90));
     entity_tera.addComponent(new ComponentPos(100, 40));
-    entity_tera.addComponent(new ComponentAnimState('data/animation/tera.json', 'idle-b'));
+    entity_tera.addComponent(new ComponentAnimState('data/animation/tera.json', 'idle'));
     entity_tera.addComponent(new ComponentTexture('data/sprite/tera.png', context.GL));
     entity_tera.addComponent(new ComponentTexcoord());
     world.addEntity(entity_tera);
