@@ -131,7 +131,7 @@ const SystemRenderSprite = CES.System.extend({
     let world_transform = mat4.create();
     let world_pos = vec3.create();
 
-    world.getEntities('Scale', 'Pos', 'Texture', 'Texcoord').forEach(function(entity) {
+    world.getEntities('Scale', 'Pos', 'Texture', 'Texcoord').forEach((function(entity) {
       current_texture = entity.getComponent('Texture').texture_;
       if(false === current_texture.IsLoaded()) {
         return;
@@ -178,7 +178,7 @@ const SystemRenderSprite = CES.System.extend({
       if(num_max_offset <= offset) {
         Draw_.call(this);
       }
-    });
+    }).bind(this));
 
     if(0 === num_draw) {
       return;

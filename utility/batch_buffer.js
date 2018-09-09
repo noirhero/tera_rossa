@@ -1,8 +1,8 @@
 // Copyright 2018 TAP, Inc. All Rights Reserved.
 
-const GNumBatch = 10;
-const GBatchQuadV_XYZUV = new Float32Array(GNumBatch * 20/*xyz uv*/ * 4/*quad*/);
-const GBatchQuadV_XYZIUV = new Float32Array(GNumBatch * 24/*xyz uv*/ * 4/*quad*/);
+const GNumBatch = 4;
+const GBatchQuadV_XYZUV = new Float32Array(GNumBatch * 5/*xyz uv*/ * 4/*quad*/);
+const GBatchQuadV_XYZIUV = new Float32Array(GNumBatch * 6/*xyz uv ti*/ * 4/*quad*/);
 const GBatchQuadI = function() {
   const indices_ = new Uint16Array(GNumBatch * 6/*two polygon*/);
 
