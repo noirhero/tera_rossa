@@ -8,11 +8,14 @@ class SceneGame extends Scene {
     const world = this.world_;
 
     world.addSystem(new SystemViewport(context));
-    this.world_.addSystem(new SystemAnimation());
-    this.world_.addSystem(new SystemRenderSprite(context));
+    world.addSystem(new SystemAnimation());
+    world.addSystem(new SystemRenderSprite(context));
+    world.addSystem(new SystemInputKeydown());
+    world.addSystem(new SystemMovement());
 
     const entity_viewport = new CES.Entity();
     entity_viewport.addComponent(new ComponentViewport());
+    entity_viewport.addComponent(new ComponentTurn());
     world.addEntity(entity_viewport);
 
     const entity_tera = new CES.Entity();
@@ -24,8 +27,10 @@ class SceneGame extends Scene {
     world.addEntity(entity_tera);
 
     const entity_rossa = new CES.Entity();
+    entity_rossa.addComponent(new ComponentPlayer());
     entity_rossa.addComponent(new ComponentScale(60, 90));
     entity_rossa.addComponent(new ComponentPos(-100, 40));
+    entity_rossa.addComponent(new ComponentDestPos(-100, 40));
     entity_rossa.addComponent(new ComponentAnimState('data/animation/rossa.json', 'idle', 0, true));
     entity_rossa.addComponent(new ComponentTexture('data/sprite/rossa.png', context.GL));
     entity_rossa.addComponent(new ComponentTexcoord());
