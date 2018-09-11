@@ -23,7 +23,7 @@ const SystemInputKeydown = CES.System.extend({
   },
   update: function() {
     const turn_entity = this.world.getEntities('Turn');
-    if(!turn_entity) {
+    if(0 === turn_entity.length) {
       return;
     }
 
@@ -38,13 +38,25 @@ const SystemInputKeydown = CES.System.extend({
       return;
     }
 
-    turn_comp.is_player_turn_ = false;
-
+    let pos = null;
     let dest_pos = null;
-    this.world.getEntities('Player', 'DestPos').forEach(function(entity) {
+    let velocity = vec3.create();
+    let speed = 0;
+
+    this.world.getEntities('Pos', 'DestPos').some(function(entity) {
+      pos = entity.getComponent('Pos').pos_;
       dest_pos = entity.getComponent('DestPos').dest_pos_;
+      velocity = vec3.subtract(velocity, dest_pos, pos);
+      speed = vec3.dot(velocity, velocity);
+      if(0.01 < speed) {
+        return false;
+      }
+      else if(!entity.getComponent('Player')) {
+        return true;
+      }
 
       vec3.scaleAndAdd(dest_pos, dest_pos, direction, 30);
+      return true;
     });
     vec3.set(direction, 0, 0, 0);
   }

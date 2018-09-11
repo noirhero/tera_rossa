@@ -80,7 +80,7 @@ const SystemRenderSprite = CES.System.extend({
         is_first = false;
 
         const entity_viewports = world.getEntities('Viewport');
-        if(0 === entity_viewports) {
+        if(0 === entity_viewports.length) {
           return;
         }
 

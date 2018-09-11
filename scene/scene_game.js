@@ -12,6 +12,7 @@ class SceneGame extends Scene {
     world.addSystem(new SystemRenderSprite(context));
     world.addSystem(new SystemInputKeydown());
     world.addSystem(new SystemMovement());
+    world.addSystem(new SystemTurn());
 
     const entity_viewport = new CES.Entity();
     entity_viewport.addComponent(new ComponentViewport());
