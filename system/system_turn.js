@@ -23,23 +23,23 @@ const SystemTurn = CES.System.extend({
       this.world.getEntities('Player', 'Pos', 'DestPos').some(function(entity) {
         if(0.01 < CalculateSpeed_(entity)) {
           turn_comp.is_player_turn_ = false;
-          return false;
+          return true;
         }
 
-        return true;
+        return false;
       });
     }
     else {
       this.world.getEntities('Pos', 'DestPos').some(function(entity) {
         if(entity.getComponent('Player')) {
-          return true;
+          return false;
         }
         else if(0.01 < CalculateSpeed_(entity)) {
           turn_comp.is_player_turn_ = true;
-          return false;
+          return true;
         }
 
-        return true;
+        return false;
       });
     }
   }

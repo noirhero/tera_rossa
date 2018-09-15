@@ -13,6 +13,7 @@ class SceneGame extends Scene {
     world.addSystem(new SystemInputKeydown());
     world.addSystem(new SystemMovement());
     world.addSystem(new SystemTurn());
+    world.addSystem(new SystemAI());
 
     const entity_viewport = new CES.Entity();
     entity_viewport.addComponent(new ComponentViewport());
@@ -22,6 +23,7 @@ class SceneGame extends Scene {
     const entity_tera = new CES.Entity();
     entity_tera.addComponent(new ComponentScale(60, 90));
     entity_tera.addComponent(new ComponentPos(100, 40));
+    entity_tera.addComponent(new ComponentDestPos(100, 40));
     entity_tera.addComponent(new ComponentAnimState('data/animation/tera.json', 'idle'));
     entity_tera.addComponent(new ComponentTexture('data/sprite/tera.png', context.GL));
     entity_tera.addComponent(new ComponentTexcoord());
@@ -40,6 +42,7 @@ class SceneGame extends Scene {
     const entity_sorcerer = new CES.Entity();
     entity_sorcerer.addComponent(new ComponentScale(60, 85));
     entity_sorcerer.addComponent(new ComponentPos(140, 38));
+    entity_sorcerer.addComponent(new ComponentDestPos(140, 38));
     entity_sorcerer.addComponent(new ComponentAnimState('data/animation/sorcerer.json', 'idle'));
     entity_sorcerer.addComponent(new ComponentTexture('data/sprite/sorcerer.png', context.GL));
     entity_sorcerer.addComponent(new ComponentTexcoord());
