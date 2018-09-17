@@ -31,7 +31,7 @@ const SystemInputKeydown = CES.System.extend({
 
     const direction = this.direction_;
     const dir_sqr_length = vec3.dot(direction, direction);
-    if(0.01 >= dir_sqr_length) {
+    if(GMoveEpsilon >= dir_sqr_length) {
       return;
     }
 
@@ -45,7 +45,7 @@ const SystemInputKeydown = CES.System.extend({
       dest_pos = entity.getComponent('DestPos').dest_pos_;
       velocity = vec3.subtract(velocity, dest_pos, pos);
       speed = vec3.dot(velocity, velocity);
-      if(0.01 < speed) {
+      if(GMoveEpsilon < speed) {
         return true;
       }
       else if(!entity.getComponent('Player')) {

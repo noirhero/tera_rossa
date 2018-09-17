@@ -32,7 +32,7 @@ const SystemMovement = CES.System.extend({
       vec3.subtract(pos_at_dest, dest_pos, pos);
       speed = vec3.dot(pos_at_dest, pos_at_dest);
 
-      if(0.01 >= speed) {
+      if(GMoveEpsilon >= speed) {
         UpdateAnimComponent_(anim_comp, 'idle');
       }
       else {

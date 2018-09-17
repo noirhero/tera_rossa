@@ -21,7 +21,7 @@ const SystemTurn = CES.System.extend({
     const turn_comp = turn_entity[0].getComponent('Turn');
     if(true === turn_comp.is_player_turn_) {
       this.world.getEntities('Player', 'Pos', 'DestPos').some(function(entity) {
-        if(0.01 < CalculateSpeed_(entity)) {
+        if(GMoveEpsilon < CalculateSpeed_(entity)) {
           turn_comp.is_player_turn_ = false;
           return true;
         }
@@ -34,7 +34,7 @@ const SystemTurn = CES.System.extend({
         if(entity.getComponent('Player')) {
           return false;
         }
-        else if(0.01 < CalculateSpeed_(entity)) {
+        else if(GMoveEpsilon < CalculateSpeed_(entity)) {
           turn_comp.is_player_turn_ = true;
           return true;
         }

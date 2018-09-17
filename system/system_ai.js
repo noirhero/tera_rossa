@@ -25,7 +25,7 @@ const SystemAI = CES.System.extend({
 
     let is_moving_player = false;
     this.world.getEntities('Player', 'Pos', 'DestPos').some(function(entity) {
-      if(0.01 < CalculateSpeed_(entity)) {
+      if(GMoveEpsilon < CalculateSpeed_(entity)) {
         is_moving_player = true;
         return true;
       }
@@ -40,7 +40,7 @@ const SystemAI = CES.System.extend({
       if(entity.getComponent('Player')) {
         return;
       }
-      else if(0.01 < CalculateSpeed_(entity)) {
+      else if(GMoveEpsilon < CalculateSpeed_(entity)) {
         return;
       }
 

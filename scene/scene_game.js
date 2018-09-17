@@ -14,10 +14,12 @@ class SceneGame extends Scene {
     world.addSystem(new SystemMovement());
     world.addSystem(new SystemTurn());
     world.addSystem(new SystemAI());
+    world.addSystem(new SystemSoundBGM());
 
     const entity_viewport = new CES.Entity();
     entity_viewport.addComponent(new ComponentViewport());
     entity_viewport.addComponent(new ComponentTurn());
+    entity_viewport.addComponent(new ComponentSoundBGM('data/sound/quiet_hill'));
     world.addEntity(entity_viewport);
 
     const entity_tera = new CES.Entity();
