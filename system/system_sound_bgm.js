@@ -9,6 +9,7 @@ const SystemSoundBGM = CES.System.extend({
       if(!bgm_comp.handle_) {
         bgm_comp.handle_ = new Howl({
           src: [bgm_comp.source_url_ + '.ogg', bgm_comp.source_url_ + '.mp4'],
+          volume: 0.1,
         });
       }
       else if(!bgm_comp.id_) {

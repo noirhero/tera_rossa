@@ -14,7 +14,7 @@ class SceneGame extends Scene {
     world.addSystem(new SystemMovement());
     world.addSystem(new SystemTurn());
     world.addSystem(new SystemAI());
-    //world.addSystem(new SystemSoundBGM());
+    world.addSystem(new SystemSoundBGM());
     world.addSystem(new SystemSoundListener());
     world.addSystem(new SystemMoveSoundEffect());
 
@@ -50,7 +50,7 @@ class SceneGame extends Scene {
     entity_sorcerer.addComponent(new ComponentAnimState('data/animation/sorcerer.json', 'idle'));
     entity_sorcerer.addComponent(new ComponentTexture('data/sprite/sorcerer.png', context.GL));
     entity_sorcerer.addComponent(new ComponentTexcoord());
-    entity_sorcerer.addComponent(new ComponentSoundEffect('data/sound/laugh_sorcerer', 140, 38));
+    entity_sorcerer.addComponent(new ComponentSoundEffect('data/sound/laugh_sorcerer'));
     world.addEntity(entity_sorcerer);
 
     this.DefaultContextStates_();
