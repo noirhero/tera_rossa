@@ -2346,7 +2346,7 @@
 
 /*!
  *  Spatial Plugin - Adds support for stereo and 3D audio where Web Audio is supported.
- *  
+ *
  *  howler.js v2.0.15
  *  howlerjs.com
  *
@@ -2876,6 +2876,9 @@
           if (!sound._pos) {
             sound._pos = self._pos || [0, 0, -0.5];
           }
+
+          // bug fix pannerAttr - by TAP
+          sound._pannerAttr = pa;
 
           // Create a new panner node.
           setupPanner(sound, 'spatial');

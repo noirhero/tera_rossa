@@ -8,7 +8,8 @@ const SystemInputKeydown = CES.System.extend({
     function Keyup_(event) {
       event.preventDefault();
 
-      switch(event.code) {
+      const code = event.code || event.key;
+      switch(code) {
       case 'ArrowLeft':  vec3.subtract(direction, direction, GRightV); break;
       case 'ArrowRight': vec3.add(direction, direction, GRightV);      break;
       case 'ArrowUp':    vec3.add(direction, direction, GUpV);         break;

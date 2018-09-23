@@ -15,15 +15,9 @@ const ComponentSoundEffect = CES.Component.extend({
 
     const sound_id = sound_effect.play();
     sound_effect.pannerAttr({
-      maxDistance: distance || 200,
+      maxDistance: distance || 1,
     }, sound_id);
     sound_effect.stop(sound_id);
-
-    sound_effect.once('load', function(){
-      sound_effect.pannerAttr({
-        maxDistance: distance || 200,
-      }, sound_id);
-    }, sound_id);
 
     this.url_ = url;
     this.handle_ = sound_effect;

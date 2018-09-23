@@ -3,10 +3,14 @@
 class WebGLContext {
   constructor() {
     const canvas = document.getElementById('main_canvas');
-    const gl = canvas.getContext('webgl', {
+    const options = {
       premultipliedAlpha: false,
       antialias: false,
-    });
+    };
+    const gl = canvas.getContext('webgl', options);
+    if(!gl) {
+      gl = canvas.getContext('experiment-webgl', options);
+    }
 
     this.canvas_ = canvas;
     this.gl_ = gl;

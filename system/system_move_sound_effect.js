@@ -25,6 +25,9 @@ const SystemMoveSoundEffect = CES.System.extend({
 
         sound_comp.to_play_ = false;
         sound_comp.handle_.pos(pos[0], pos[1], 0, sound_comp.id_);
+        sound_comp.handle_.pannerAttr({
+          maxDistance: 1,
+        });
       }
       else {
         if(true === sound_comp.handle_.playing(sound_comp.id_)) {
