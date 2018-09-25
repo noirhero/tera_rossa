@@ -4,7 +4,7 @@ body {
 }
 
 #main {
-  position: absolute;
+  position: static;
   width: 100%;
   height: 100%;
   color: black;
@@ -15,7 +15,7 @@ body {
   margin: 0;
 }
 
-#main_canvas {
+/* #main_canvas {
   position: absolute;
   z-index: 0;
-}
+} */

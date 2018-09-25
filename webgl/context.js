@@ -1,8 +1,17 @@
 // Copyright 2018 TAP, Inc. All Rights Reserved.
 
+function IgnoreEvent(event) {
+  event.preventDefault();
+}
+
 class WebGLContext {
   constructor() {
+    const main = document.getElementById('main');
+    main.ontouchmove = IgnoreEvent;
+
     const canvas = document.getElementById('main_canvas');
+    canvas.ontouchmove = IgnoreEvent;
+
     const options = {
       premultipliedAlpha: false,
       antialias: false,
