@@ -22,8 +22,14 @@ function Texture(url, gl) {
   image_.onload = OnLoadImage_;
   image_.src = url;
 
-  this.IsLoaded = function() {
-    return (null !== image_) ? false : true;
+  this.renderable_ = true;
+
+  this.IsRenderable = function() {
+    return (null !== image_ || false === this.renderable_) ? false : true;
+  };
+
+  this.SetRenderable = function(flag) {
+    this.renderable_ = flag;
   };
 
   this.GetTexture = function() {
@@ -33,11 +39,16 @@ function Texture(url, gl) {
 
 const ComponentTexture = CES.Component.extend({
   name: 'Texture',
-  init: function(url, gl) {
+  init: function(url, gl, renderable) {
     let texture = GTextures[url];
     if(!texture) {
       GTextures[url] = texture = new Texture(url, gl);
+
+      if(undefined !== renderable) {
+        texture.renderable_ = renderable;
+      }
     }
+
     this.texture_ = texture;
   }
 });

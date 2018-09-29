@@ -10,10 +10,10 @@ const SystemInputKeydown = CES.System.extend({
 
       const code = event.code || event.key;
       switch(code) {
-      case 'ArrowLeft':  vec3.subtract(direction, direction, GRightV); break;
-      case 'ArrowRight': vec3.add(direction, direction, GRightV);      break;
-      case 'ArrowUp':    vec3.add(direction, direction, GUpV);         break;
-      case 'ArrowDown':  vec3.subtract(direction, direction, GUpV);    break;
+      case 'ArrowLeft':  vec3.copy(direction, GLeftV); break;
+      case 'ArrowRight': vec3.copy(direction, GRightV); break;
+      case 'ArrowUp':    vec3.copy(direction, GUpV);    break;
+      case 'ArrowDown':  vec3.copy(direction, GDownV);    break;
       }
     }
 
@@ -56,6 +56,7 @@ const SystemInputKeydown = CES.System.extend({
       vec3.scaleAndAdd(dest_pos, dest_pos, direction, 30);
       return true;
     });
+
     vec3.set(direction, 0, 0, 0);
   }
 });
