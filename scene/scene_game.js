@@ -15,6 +15,7 @@ class SceneGame extends Scene {
     world.addSystem(new SystemTurn());
     world.addSystem(new SystemAI());
     world.addSystem(new SystemSoundBGM());
+    world.addSystem(new SystemTileMap(context, world));
 
     const entity_viewport = new CES.Entity();
     entity_viewport.addComponent(new ComponentViewport());
@@ -49,7 +50,7 @@ class SceneGame extends Scene {
     entity_sorcerer.addComponent(new ComponentTexture('data/sprite/sorcerer.png', context.GL));
     entity_sorcerer.addComponent(new ComponentTexcoord());
     world.addEntity(entity_sorcerer);
-
+    
     this.DefaultContextStates_();
   }
 
