@@ -13,15 +13,11 @@ const ComponentSoundEffect = CES.Component.extend({
       });
     }
 
-    const sound_id = sound_effect.play();
-    sound_effect.pannerAttr({
-      maxDistance: distance || 1,
-    }, sound_id);
-    sound_effect.stop(sound_id);
-
     this.url_ = url;
     this.handle_ = sound_effect;
-    this.id_ = sound_id;
+    this.id_ = null;
+
+    this.distance_ = distance || 100;
     this.to_play_ = true;
   }
 });
