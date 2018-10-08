@@ -48,7 +48,7 @@ class PostProcess {
     const height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     if(width !== this.scene_width_ || height !== this.scene_height_) {
       this.scene_texture_ = this.CreateSceneTexture();
-      
+
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.scene_frame_buffer_);
       gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.scene_texture_, 0);
 
@@ -93,30 +93,30 @@ class PostProcess {
     const gl = this.gl_;
     const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     const height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  
+
     const u_window_size_ = this.u_window_size_;
     const window_size_ = this.window_size_ = vec2.fromValues(width, height);
     const u_torch_radius_ = this.u_torch_radius_;
-    let torch_radius = Math.random() * (150 - 140) + 140;
+    let torch_radius = Math.RangeRandom(40, 50);
 
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.torch_frame_buffer_);
     gl.clear(gl.COLOR_BUFFER_BIT);
-  
+
     gl.useProgram(this.torch_program_);
-  
+
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, recent_texture);
-  
+
     gl.uniform2fv(u_window_size_, window_size_);
     gl.uniform1f(u_torch_radius_, torch_radius);
-  
+
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ib_);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vb_);
     gl.vertexAttribPointer(this.a_torch_projection_pos_, 2, gl.FLOAT, false, 16, 0);
     gl.enableVertexAttribArray(this.a_torch_projection_pos_);
     gl.vertexAttribPointer(this.a_torch_tex_coord_, 2, gl.FLOAT, false, 16, 8);
     gl.enableVertexAttribArray(this.a_torch_tex_coord_);
-  
+
     gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
 
     return this.torch_result_texture_;
@@ -148,7 +148,7 @@ class PostProcess {
     gl.bindFramebuffer(gl.FRAMEBUFFER, frame_buffer);
     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-  
+
     return frame_buffer;
   }
 
@@ -191,71 +191,71 @@ class PostProcess {
     const src = [
       'attribute vec2 projection_pos;',
       'attribute vec2 tex_coord;',
-  
+
       'varying vec2 out_tex_coord;',
-  
+
       'void main() {',
       ' gl_Position = vec4(projection_pos, 0.0, 1.0);',
       ' out_tex_coord = tex_coord;',
       '}',
     ].join('\n');
-  
+
     this.vs_ = context.CreateShader(src, this.gl_.VERTEX_SHADER);
   }
 
   CreateFragmentShader(context) {
     const src = [
       'precision mediump float;',
-  
+
       'uniform sampler2D scene_color;',
-  
+
       'varying vec2 out_tex_coord;',
-  
+
       'void main() {',
       ' gl_FragColor = texture2D(scene_color, out_tex_coord);',
       '}',
     ].join('\n');
-  
+
     this.fs_ = context.CreateShader(src, this.gl_.FRAGMENT_SHADER);
   }
 
   CreateTorchVertexShader(context) {
     'use strict';
-  
+
     const src = [
       'attribute vec2 projection_pos;',
       'attribute vec2 tex_coord;',
-  
+
       'varying vec2 out_tex_coord;',
-  
+
       'void main() {',
       ' gl_Position = vec4(projection_pos, 0.0, 1.0);',
       ' out_tex_coord = tex_coord;',
       '}',
     ].join('\n');
-  
+
     return context.CreateShader(src, this.gl_.VERTEX_SHADER);
   };
-  
+
   CreateTorchFragmentShader(context) {
     'use strict';
-  
+
     const src = [
       'precision mediump float;',
-  
+
       'uniform sampler2D scene_color;',
       'uniform vec2 window_size;',
       'uniform float torch_radius;',
-  
+
       'varying vec2 out_tex_coord;',
-  
+
       'void main() {',
       ' vec2 window_center = vec2(window_size.x * 0.5, window_size.y * 0.5);',
       ' vec2 window_tex_coord = vec2(out_tex_coord.x * window_size.x, out_tex_coord.y * window_size.y);',
-  
+
       ' float dist = distance(window_tex_coord, window_center);',
       ' float smoothing_dist = torch_radius * 1.5;',
-  
+
       ' vec4 color = texture2D(scene_color, out_tex_coord);',
       ' if(dist <= smoothing_dist) {',
       '  if(dist >= torch_radius) {',
@@ -265,11 +265,11 @@ class PostProcess {
       '  gl_FragColor = color;',
       '  return;',
       ' }',
-      
+
       ' gl_FragColor = vec4(vec3(0, 0, 0), color.a);',
       '}',
     ].join('\n');
-  
+
     return context.CreateShader(src, this.gl_.FRAGMENT_SHADER);
   };
 }

@@ -76,7 +76,7 @@ class SceneGame extends Scene {
     gl.enable(gl.BLEND);
     gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
-    gl.clearColor(0.25, 0.25, 0.75, 1);
+    gl.clearColor(0.12, 0.12, 0.12, 1);
     gl.clearDepth(0);
   }
 

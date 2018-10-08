@@ -198,8 +198,8 @@ const SystemRenderSprite = CES.System.extend({
       post_process.End();
       return;
     }
-    Draw_.call(this);
 
+    Draw_.call(this);
     post_process.End();
   }
 });
