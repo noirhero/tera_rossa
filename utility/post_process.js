@@ -47,12 +47,16 @@ class PostProcess {
     const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     const height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     if(width !== this.scene_width_ || height !== this.scene_height_) {
-      this.CreateSceneTexture();
-
+      this.scene_texture_ = this.CreateSceneTexture();
+      
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.scene_frame_buffer_);
       gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.scene_texture_, 0);
 
-      this.CreateDepthBuffer();
+      this.scene_depth_buffer_ = this.CreateDepthBuffer();
+
+      this.torch_result_texture_ = this.CreateSceneTexture();
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.torch_frame_buffer_);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.torch_result_texture_, 0);
     }
 
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.scene_frame_buffer_);
