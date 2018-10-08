@@ -11,10 +11,13 @@ class SceneGame extends Scene {
     world.addSystem(new SystemAnimation());
     world.addSystem(new SystemRenderSprite(context));
     world.addSystem(new SystemInputKeydown());
+    world.addSystem(new SystemInputTouch());
     world.addSystem(new SystemMovement());
     world.addSystem(new SystemTurn());
     world.addSystem(new SystemAI());
     world.addSystem(new SystemSoundBGM());
+    world.addSystem(new SystemSoundListener());
+    world.addSystem(new SystemMoveSoundEffect());
 
     const entity_viewport = new CES.Entity();
     entity_viewport.addComponent(new ComponentViewport());
@@ -22,7 +25,16 @@ class SceneGame extends Scene {
     entity_viewport.addComponent(new ComponentSoundBGM('data/sound/quiet_hill'));
     world.addEntity(entity_viewport);
 
+    const entity_arrow = new CES.Entity();
+    entity_arrow.addComponent(new ComponentScale(60, 60));
+    entity_arrow.addComponent(new ComponentRot(0, 0, 180));
+    entity_arrow.addComponent(new ComponentPos(0, 0, 10));
+    entity_arrow.addComponent(new ComponentTexture('data/texture/arrow.png', context.GL, false));
+    entity_arrow.addComponent(new ComponentTexcoord());
+    world.addEntity(entity_arrow);
+
     const entity_tera = new CES.Entity();
+    entity_arrow.addComponent(new ComponentArrow());
     entity_tera.addComponent(new ComponentScale(60, 90));
     entity_tera.addComponent(new ComponentPos(100, 40));
     entity_tera.addComponent(new ComponentDestPos(100, 40));
@@ -48,6 +60,7 @@ class SceneGame extends Scene {
     entity_sorcerer.addComponent(new ComponentAnimState('data/animation/sorcerer.json', 'idle'));
     entity_sorcerer.addComponent(new ComponentTexture('data/sprite/sorcerer.png', context.GL));
     entity_sorcerer.addComponent(new ComponentTexcoord());
+    entity_sorcerer.addComponent(new ComponentSoundEffect('data/sound/laugh_sorcerer'));
     world.addEntity(entity_sorcerer);
 
     this.DefaultContextStates_();

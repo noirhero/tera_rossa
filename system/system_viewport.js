@@ -13,10 +13,12 @@ const SystemViewport = CES.System.extend({
 
     const canvas = this.canvas_;
     if(width !== canvas.width) {
+      //alert(`${document.documentElement.clientLeft}, ${document.documentElement.clientTop}, ${document.documentElement.clientWidth}, ${document.documentElement.clientHeight}`)
       canvas.width = width;
     }
     if(height !== canvas.height) {
       canvas.height = height;
+      //alert(`${document.documentElement.clientLeft}, ${document.documentElement.clientTop}, ${document.documentElement.clientWidth}, ${document.documentElement.clientHeight}`)
     }
 
     let comp_viewport = null;

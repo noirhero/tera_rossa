@@ -8,11 +8,12 @@ const SystemInputKeydown = CES.System.extend({
     function Keyup_(event) {
       event.preventDefault();
 
-      switch(event.code) {
-      case 'ArrowLeft':  vec3.subtract(direction, direction, GRightV); break;
-      case 'ArrowRight': vec3.add(direction, direction, GRightV);      break;
-      case 'ArrowUp':    vec3.add(direction, direction, GUpV);         break;
-      case 'ArrowDown':  vec3.subtract(direction, direction, GUpV);    break;
+      const code = event.code || event.key;
+      switch(code) {
+      case 'ArrowLeft':  vec3.copy(direction, GLeftV); break;
+      case 'ArrowRight': vec3.copy(direction, GRightV); break;
+      case 'ArrowUp':    vec3.copy(direction, GUpV);    break;
+      case 'ArrowDown':  vec3.copy(direction, GDownV);    break;
       }
     }
 
@@ -35,26 +36,23 @@ const SystemInputKeydown = CES.System.extend({
       return;
     }
 
-    let pos = null;
-    let dest_pos = null;
-    let velocity = vec3.create();
-    let speed = 0;
+    let dest_pos_comp = null;
 
-    this.world.getEntities('Pos', 'DestPos').some(function(entity) {
-      pos = entity.getComponent('Pos').pos_;
-      dest_pos = entity.getComponent('DestPos').dest_pos_;
-      velocity = vec3.subtract(velocity, dest_pos, pos);
-      speed = vec3.dot(velocity, velocity);
-      if(GMoveEpsilon < speed) {
+    this.world.getEntities('DestPos').some(function(entity) {
+      dest_pos_comp = entity.getComponent('DestPos');
+      if(1 > dest_pos_comp.time_) {
         return true;
       }
       else if(!entity.getComponent('Player')) {
         return false;
       }
 
-      vec3.scaleAndAdd(dest_pos, dest_pos, direction, 30);
+      dest_pos_comp.delta_ = 0;
+      vec3.copy(dest_pos_comp.src_pos_, dest_pos_comp.dest_pos_);
+      vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.src_pos_, direction, 30);
       return true;
     });
+
     vec3.set(direction, 0, 0, 0);
   }
 });

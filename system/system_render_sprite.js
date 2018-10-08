@@ -128,17 +128,19 @@ const SystemRenderSprite = CES.System.extend({
     }
 
     let scale = null;
+    let rot = quat.create();
     let pos = null;
     let texcoord = null;
     let current_texture = null;
     let world_transform = mat4.create();
     let world_pos = vec3.create();
+    let comp_rot = null;
 
     post_process.Begin();
 
     world.getEntities('Scale', 'Pos', 'Texture', 'Texcoord').forEach((function(entity) {
       current_texture = entity.getComponent('Texture').texture_;
-      if(false === current_texture.IsLoaded()) {
+      if(false === current_texture.IsRenderable()) {
         return;
       }
 
@@ -167,7 +169,14 @@ const SystemRenderSprite = CES.System.extend({
       pos = entity.getComponent('Pos').pos_;
       texcoord = entity.getComponent('Texcoord').texcoord_;
 
-      mat4.fromRotationTranslationScale(world_transform, GQuatI, pos, scale);
+      comp_rot = entity.getComponent('Rot');
+      if(comp_rot) {
+        quat.fromEuler(rot, comp_rot.rot_[0], comp_rot.rot_[1], comp_rot.rot_[2]);
+        mat4.fromRotationTranslationScale(world_transform, rot, pos, scale);
+      }
+      else {
+        mat4.fromRotationTranslationScale(world_transform, GQuatI, pos, scale);
+      }
 
       for(let i = 0; i < 4; ++i) {
         vec3.transformMat4(world_pos, GQuadLocalPos[i], world_transform);
