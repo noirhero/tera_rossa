@@ -3,27 +3,22 @@
 const SystemMoveSoundEffect = CES.System.extend({
   update: function() {
     let sound_comp = null;
-
     let pos = null;
-    let dest_pos = null;
-    let velocity = vec3.create();
-    let speed = 0;
+    let delta = 0;
 
-    this.world.getEntities('Pos', 'DestPos', 'Sound').forEach(function(entity) {
-      sound_comp = entity.getComponent('Sound');
+    this.world.getEntities('DestPos', 'Sound').forEach(function(entity) {
       pos = entity.getComponent('Pos').pos_;
-      dest_pos = entity.getComponent('DestPos').dest_pos_;
-      vec3.subtract(velocity, dest_pos, pos);
-      speed = vec3.dot(velocity, velocity);
+      sound_comp = entity.getComponent('Sound');
+      delta = entity.getComponent('DestPos').delta_;
 
-      if(GMoveEpsilon < speed) {
+      if(1 > delta) {
         if(true === sound_comp.to_play_) {
           if(false === sound_comp.handle_.playing()) {
             if(!sound_comp.id_) {
               sound_comp.id_ = sound_comp.handle_.play();
               sound_comp.handle_.once('play', function() {
                 sound_comp.handle_.pos(pos[0], pos[1], 0, sound_comp.id_);
-                sound_comp.handle_.volume(1, sound_comp.id_);
+                sound_comp.handle_.volume(0.85, sound_comp.id_);
                 sound_comp.handle_.pannerAttr({
                   maxDistance: sound_comp.distance_,
                 }, sound_comp.id_);
@@ -34,9 +29,12 @@ const SystemMoveSoundEffect = CES.System.extend({
               sound_comp.handle_.play(sound_comp.id_);
             }
           }
-        }
 
-        sound_comp.to_play_ = false;
+          sound_comp.to_play_ = false;
+        }
+        else {
+          sound_comp.handle_.pos(pos[0], pos[1], 0, sound_comp.id_);
+        }
       }
       else {
         if(true === sound_comp.handle_.playing(sound_comp.id_)) {
