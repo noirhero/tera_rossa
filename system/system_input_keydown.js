@@ -40,7 +40,7 @@ const SystemInputKeydown = CES.System.extend({
 
     this.world.getEntities('DestPos').some(function(entity) {
       dest_pos_comp = entity.getComponent('DestPos');
-      if(1 > dest_pos_comp.time_) {
+      if(1 > dest_pos_comp.delta_) {
         return true;
       }
       else if(!entity.getComponent('Player')) {
