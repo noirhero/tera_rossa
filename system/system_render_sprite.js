@@ -195,6 +195,7 @@ const SystemRenderSprite = CES.System.extend({
     }).bind(this));
 
     if(0 === num_draw) {
+      post_process.End();
       return;
     }
     Draw_.call(this);
