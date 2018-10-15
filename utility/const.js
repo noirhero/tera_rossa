@@ -23,3 +23,9 @@ const GEmptyTexcoord = [
 
 const GLimitTexture = 8; // iphone 5s, samsung galaxy note 3
 const GMoveEpsilon = 0.069;
+
+const GTile_size = 100;
+const GTileLength_x = 8;
+const GTileLength_y = 12;
+const GTile_BonusRandomMax = 5;
+const GTileCollisionType = {Path: 1, Block: 2, BonusPath: 3};

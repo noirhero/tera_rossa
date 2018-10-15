@@ -6,12 +6,6 @@ const SystemTileMap = CES.System.extend({
     this.context = context;    
     this.world = world;
     
-    const tile_size = 100;
-    const size_x = 8;
-    const size_y = 12;
-
-    let path_stack = [];
-
     /**
      * 경로 설정
      *  Edge(시계방향)
@@ -19,30 +13,33 @@ const SystemTileMap = CES.System.extend({
      *  가변위치 => 0 or 2 : 짝수면 x가 랜덤 | 1 or 3 : 홀수면 y가 랜덤
      *  방향성 => 0->2 : y++ | 1->3 : x-- | 2->0 : y-- | 3->1 : x++
      */
+
+     let path_stack = [];
+
     let start_edge = Math.RangeRandomInt(0, 3); 
     let end_edge = (start_edge + 2) % 4 // 맞은편을 구하기 위함    
 
     // 시작 지점
-    let random_start_x = Math.RangeRandomInt(0, size_x); 
-    let random_start_y = Math.RangeRandomInt(0, size_y); 
+    let random_start_x = Math.RangeRandomInt(0, GTileLength_x); 
+    let random_start_y = Math.RangeRandomInt(0, GTileLength_y); 
 
     let start_path;
     switch(start_edge){
       case 0: start_path = {x : random_start_x, y : 0}; break;
-      case 1: start_path = {x : size_x, y : random_start_y}; break;
-      case 2: start_path = {x : random_start_x, y : size_y}; break;
+      case 1: start_path = {x : GTileLength_x, y : random_start_y}; break;
+      case 2: start_path = {x : random_start_x, y : GTileLength_y}; break;
       case 3: start_path = {x : 0, y : random_start_y}; break;
     }
 
     // 도착지점
-    let random_end_x = Math.RangeRandomInt(0, size_x); 
-    let random_end_y = Math.RangeRandomInt(0, size_y);
+    let random_end_x = Math.RangeRandomInt(0, GTileLength_x); 
+    let random_end_y = Math.RangeRandomInt(0, GTileLength_y);
 
     let end_path;
     switch(end_edge){
       case 0: end_path = {x : random_end_x, y : 0}; break;
-      case 1: end_path = {x : size_x, y : random_end_y}; break;
-      case 2: end_path = {x : random_end_x, y : size_y}; break;
+      case 1: end_path = {x : GTileLength_x, y : random_end_y}; break;
+      case 2: end_path = {x : random_end_x, y : GTileLength_y}; break;
       case 3: end_path = {x : 0, y : random_end_y}; break;
     }
 
@@ -68,7 +65,7 @@ const SystemTileMap = CES.System.extend({
 
       let random_axis = 0;
       if(locked_x == false && locked_y == false){
-        random_axis = Math.RangeRandomInt(0, 1);
+        random_axis = Math.RangeRandomInt(0, 2);
       }
       else{
         if(locked_x){
@@ -82,26 +79,30 @@ const SystemTileMap = CES.System.extend({
         cached_path = {x : weight_path.x, y : weight_path.y + direction_path.y};
       }
     }
-    console.log(`start_edge : ${start_edge} ${random_start_x} ${random_start_y}`);
-    console.log(`end_edge : ${end_edge} ${random_end_x} ${random_end_y}`);
     
     /**
      * 타일 속성 부여
      */    
-    let isPath = false;
-    for(let x=0; x <= size_x; x++){
-      for(let y=0; y <= size_y; y++){
-        
-        // 경로 인지 아닌지 판별
-        for(let ran=0; ran<path_stack.length; ran++){          
-          isPath = path_stack[ran].x === x && path_stack[ran].y === y;
-          if(isPath){
+    let collision_type = GTileCollisionType.Block;
+    for(let x=0; x <= GTileLength_x; x++){
+      for(let y=0; y <= GTileLength_y; y++){
+         
+        // 계산된 경로를 돌면서 컴포넌트 설정 경로 인지 아닌지 판별
+        collision_type = GTileCollisionType.Block;
+        for(let ran=0; ran<path_stack.length; ran++){
+          if(path_stack[ran].x === x && path_stack[ran].y === y){      
+            collision_type = GTileCollisionType.Path;
             break;
           } 
         }
         
+        if(collision_type !== GTileCollisionType.Path){
+          let bonus_path = (Math.RangeRandomInt(0, GTile_BonusRandomMax) === 0);
+          collision_type = bonus_path ? GTileCollisionType.BonusPath : GTileCollisionType.Block;
+        }
+
         const entity_tile = new CES.Entity();
-        entity_tile.addComponent(new ComponentTile(x, y, isPath));
+        entity_tile.addComponent(new ComponentTile(x, y, collision_type));
         world.addEntity(entity_tile);
       }
     }
@@ -113,16 +114,22 @@ const SystemTileMap = CES.System.extend({
     let comp_tile = null;
     this.world.getEntities('Tile').forEach(function(entity) {
       comp_tile = entity.getComponent('Tile');
-      if(comp_tile.collision_)
-      {
-        let pos_x = (comp_tile.tile_pos_[0] - (size_x / 2)) * tile_size;        
-        let pos_y = (comp_tile.tile_pos_[1] - (size_y / 2)) * tile_size; 
-
-        entity.addComponent(new ComponentScale(tile_size, tile_size));
-        entity.addComponent(new ComponentPos(pos_x, pos_y));
-        entity.addComponent(new ComponentTexture('data/texture/dungeon_tile.png', context.GL));
-        entity.addComponent(new ComponentTexcoord());
+       
+      let pos_x = (comp_tile.tile_pos_[0] - (GTileLength_x / 2)) * GTile_size;        
+      let pos_y = (comp_tile.tile_pos_[1] - (GTileLength_y / 2)) * GTile_size; 
+      let texture_path;
+      switch(comp_tile.collision_){
+        case GTileCollisionType.Path : texture_path = 'data/texture/dungeon_tile_path.png'; break;
+        case GTileCollisionType.Block : texture_path = 'data/texture/dungeon_tile_block.png'; break;
+        case GTileCollisionType.BonusPath : texture_path = 'data/texture/dungeon_tile_bonuspath.png'; break;
+        default : texture_path = 'data/texture/dungeon_tile.png'; break;
       }
+
+      entity.addComponent(new ComponentScale(GTile_size, GTile_size));
+      entity.addComponent(new ComponentPos(pos_x, pos_y));
+      entity.addComponent(new ComponentTexture(texture_path, context.GL));
+      entity.addComponent(new ComponentTexcoord());
+      
     });    
   },
 
