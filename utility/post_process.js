@@ -55,9 +55,7 @@ class PostProcess {
     let torch_radius = Math.RangeRandom(40, 50);
 
     gl.disable(gl.DEPTH_TEST);
-
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-    gl.clear(gl.COLOR_BUFFER_BIT);
 
     gl.useProgram(this.program_);
 
@@ -73,9 +71,7 @@ class PostProcess {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ib_);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vb_);
     gl.vertexAttribPointer(this.a_projection_pos_, 2, gl.FLOAT, false, 16, 0);
-    gl.enableVertexAttribArray(this.a_projection_pos_);
     gl.vertexAttribPointer(this.a_tex_coord_, 2, gl.FLOAT, false, 16, 8);
-    gl.enableVertexAttribArray(this.a_tex_coord_);
 
     gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
   }

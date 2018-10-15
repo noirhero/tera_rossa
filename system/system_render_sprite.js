@@ -88,7 +88,12 @@ const SystemRenderSprite = CES.System.extend({
         }
 
         const comp_viewport = entity_viewports[0].getComponent('Viewport');
-        gl.viewport(0, 0, comp_viewport.width_, comp_viewport.height_);
+        if(comp_viewport.width_ !== this.width_ || comp_viewport.height_ !== this.height_) {
+          gl.viewport(0, 0, comp_viewport.width_, comp_viewport.height_);
+
+          this.width_ = comp_viewport.width_;
+          this.height_ = comp_viewport.height_;
+        }
 
         gl.enable(gl.DEPTH_TEST);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -100,20 +105,17 @@ const SystemRenderSprite = CES.System.extend({
         gl.useProgram(this.program_);
         gl.uniformMatrix4fv(this.u_vp_transform_, false, comp_viewport.transform_vp_);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ib_);
-
         gl.bindBuffer(gl.ARRAY_BUFFER, this.vb_);
         gl.vertexAttribPointer(a_world_pos, 3, gl.FLOAT, false, 24, 0);
-        gl.enableVertexAttribArray(a_world_pos);
         gl.vertexAttribPointer(a_tex_coord, 2, gl.FLOAT, false, 24, 12);
-        gl.enableVertexAttribArray(a_tex_coord);
         gl.vertexAttribPointer(a_tex_index, 1, gl.FLOAT, false, 24, 20);
-        gl.enableVertexAttribArray(a_tex_index);
       }
 
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, GBatchQuadV_XYZIUV);
 
       const num_bind_textures = bind_textures.length;
-      for(let bi = 0; bi < num_bind_textures; ++bi) {
+      gl.bindTexture(gl.TEXTURE_2D, bind_textures[0].GetTexture());
+      for(let bi = 1; bi < num_bind_textures; ++bi) {
         gl.activeTexture(gl.TEXTURE0 + bi);
         gl.bindTexture(gl.TEXTURE_2D, bind_textures[bi].GetTexture());
       }

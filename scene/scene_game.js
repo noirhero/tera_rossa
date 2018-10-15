@@ -78,6 +78,10 @@ class SceneGame extends Scene {
 
     gl.clearColor(0.12, 0.12, 0.12, 1);
     gl.clearDepth(0);
+
+    gl.enableVertexAttribArray(0);
+    gl.enableVertexAttribArray(1);
+    gl.enableVertexAttribArray(2);
   }
 
   ContextRestored_(event) {
