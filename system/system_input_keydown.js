@@ -43,6 +43,8 @@ const SystemInputKeydown = CES.System.extend({
     this.world.getEntities('Pos', 'DestPos').some(function(entity) {
       pos = entity.getComponent('Pos').pos_;
       dest_pos = entity.getComponent('DestPos').dest_pos_;
+
+
       velocity = vec3.subtract(velocity, dest_pos, pos);
       speed = vec3.dot(velocity, velocity);
       if(GMoveEpsilon < speed) {
@@ -55,6 +57,10 @@ const SystemInputKeydown = CES.System.extend({
       vec3.scaleAndAdd(dest_pos, dest_pos, direction, 30);
       return true;
     });
+    
+    //test
+    console.log(`tileMap : ${TileMap.CanMove(this.world.getEntities('Tile'), dest_pos)}`);
+
     vec3.set(direction, 0, 0, 0);
   }
 });
