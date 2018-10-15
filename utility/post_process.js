@@ -11,41 +11,26 @@ class PostProcess {
 
     this.CreateVertexBuffer(context);
     this.CreateIndexBuffer(context);
-    this.CreateVertexShader(context);
-    this.CreateFragmentShader(context);
+    this.CreateTorchVertexShader(context);
+    this.CreateTorchFragmentShader(context);
 
     let program = context.CreateProgram(this.vs_, this.fs_);
     this.a_projection_pos_ = gl.getAttribLocation(program, 'projection_pos');
     this.a_tex_coord_ = gl.getAttribLocation(program, 'tex_coord');
     this.u_scene_color_ = gl.getUniformLocation(program, 'scene_color');
+    this.u_window_size_ = gl.getUniformLocation(program, 'window_size');
+    this.u_torch_radius_ = gl.getUniformLocation(program, 'torch_radius');
+    this.window_size_ = vec2.fromValues(this.scene_width_, this.scene_height_);
     this.program_ = program;
 
-    this.InitializeForTorch(context);
-  }
-
-  InitializeForTorch(context) {
-    const gl = this.gl_;
-
-    this.torch_vs_ = this.CreateTorchVertexShader(context);
-    this.torch_fs_ = this.CreateTorchFragmentShader(context);
-
-    let torch_program = context.CreateProgram(this.torch_vs_, this.torch_fs_);
-    this.a_torch_projection_pos_ = gl.getAttribLocation(torch_program, 'projection_pos');
-    this.a_torch_tex_coord_ = gl.getAttribLocation(torch_program, 'tex_coord');
-    this.u_torch_scene_color_ = gl.getUniformLocation(torch_program, 'scene_color');
-    this.u_window_size_ = gl.getUniformLocation(torch_program, 'window_size');
-    this.u_torch_radius_ = gl.getUniformLocation(torch_program, 'torch_radius');
-    this.window_size_ = vec2.fromValues(this.scene_width_, this.scene_height_);
-    this.torch_program_ = torch_program;
-
-    this.torch_result_texture_ = this.CreateSceneTexture();
-    this.torch_frame_buffer_ = this.CreateFrameBuffer(this.torch_result_texture_);
+    this.is_changed_scene_size_ = true;
   }
 
   Begin() {
     const gl = this.gl_;
     const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     const height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
     if(width !== this.scene_width_ || height !== this.scene_height_) {
       this.scene_texture_ = this.CreateSceneTexture();
 
@@ -53,43 +38,13 @@ class PostProcess {
       gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.scene_texture_, 0);
 
       this.scene_depth_buffer_ = this.CreateDepthBuffer();
-
-      this.torch_result_texture_ = this.CreateSceneTexture();
-      gl.bindFramebuffer(gl.FRAMEBUFFER, this.torch_frame_buffer_);
-      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.torch_result_texture_, 0);
+      this.is_changed_scene_size_ = true;
     }
 
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.scene_frame_buffer_);
   }
 
   End() {
-    const gl = this.gl_;
-
-    gl.disable(gl.DEPTH_TEST);
-
-    // run post-processing
-    let result_texture = this.RunTorchEffect(this.scene_texture_);
-
-    // draw the result
-    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    gl.useProgram(this.program_);
-
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, result_texture);
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ib_);
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.vb_);
-    gl.vertexAttribPointer(this.a_projection_pos_, 2, gl.FLOAT, false, 16, 0);
-    gl.enableVertexAttribArray(this.a_projection_pos_);
-    gl.vertexAttribPointer(this.a_tex_coord_, 2, gl.FLOAT, false, 16, 8);
-    gl.enableVertexAttribArray(this.a_tex_coord_);
-
-    gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
-  }
-
-  RunTorchEffect(recent_texture) {
     const gl = this.gl_;
     const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     const height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
@@ -99,27 +54,30 @@ class PostProcess {
     const u_torch_radius_ = this.u_torch_radius_;
     let torch_radius = Math.RangeRandom(40, 50);
 
-    gl.bindFramebuffer(gl.FRAMEBUFFER, this.torch_frame_buffer_);
+    gl.disable(gl.DEPTH_TEST);
+
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    gl.useProgram(this.torch_program_);
+    gl.useProgram(this.program_);
 
     gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, recent_texture);
+    gl.bindTexture(gl.TEXTURE_2D, this.scene_texture_);
 
-    gl.uniform2fv(u_window_size_, window_size_);
+    if(true === this.is_changed_scene_size_) {
+      gl.uniform2fv(u_window_size_, window_size_);
+      this.is_changed_scene_size_ = false;
+    }
     gl.uniform1f(u_torch_radius_, torch_radius);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ib_);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vb_);
-    gl.vertexAttribPointer(this.a_torch_projection_pos_, 2, gl.FLOAT, false, 16, 0);
-    gl.enableVertexAttribArray(this.a_torch_projection_pos_);
-    gl.vertexAttribPointer(this.a_torch_tex_coord_, 2, gl.FLOAT, false, 16, 8);
-    gl.enableVertexAttribArray(this.a_torch_tex_coord_);
+    gl.vertexAttribPointer(this.a_projection_pos_, 2, gl.FLOAT, false, 16, 0);
+    gl.enableVertexAttribArray(this.a_projection_pos_);
+    gl.vertexAttribPointer(this.a_tex_coord_, 2, gl.FLOAT, false, 16, 8);
+    gl.enableVertexAttribArray(this.a_tex_coord_);
 
     gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
-
-    return this.torch_result_texture_;
   }
 
   CreateSceneTexture() {
@@ -187,38 +145,6 @@ class PostProcess {
     this.ib_ = context.CreateBuffer(this.gl_.ELEMENT_ARRAY_BUFFER, indices, this.gl_.STATIC_DRAW);
   }
 
-  CreateVertexShader(context) {
-    const src = [
-      'attribute vec2 projection_pos;',
-      'attribute vec2 tex_coord;',
-
-      'varying vec2 out_tex_coord;',
-
-      'void main() {',
-      ' gl_Position = vec4(projection_pos, 0.0, 1.0);',
-      ' out_tex_coord = tex_coord;',
-      '}',
-    ].join('\n');
-
-    this.vs_ = context.CreateShader(src, this.gl_.VERTEX_SHADER);
-  }
-
-  CreateFragmentShader(context) {
-    const src = [
-      'precision mediump float;',
-
-      'uniform sampler2D scene_color;',
-
-      'varying vec2 out_tex_coord;',
-
-      'void main() {',
-      ' gl_FragColor = texture2D(scene_color, out_tex_coord);',
-      '}',
-    ].join('\n');
-
-    this.fs_ = context.CreateShader(src, this.gl_.FRAGMENT_SHADER);
-  }
-
   CreateTorchVertexShader(context) {
     'use strict';
 
@@ -234,7 +160,7 @@ class PostProcess {
       '}',
     ].join('\n');
 
-    return context.CreateShader(src, this.gl_.VERTEX_SHADER);
+    this.vs_ = context.CreateShader(src, this.gl_.VERTEX_SHADER);
   };
 
   CreateTorchFragmentShader(context) {
@@ -270,6 +196,6 @@ class PostProcess {
       '}',
     ].join('\n');
 
-    return context.CreateShader(src, this.gl_.FRAGMENT_SHADER);
+    this.fs_ = context.CreateShader(src, this.gl_.FRAGMENT_SHADER);
   };
 }
