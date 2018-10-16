@@ -89,7 +89,7 @@ const SystemInputTouch = CES.System.extend({
 
         pos = entity.getComponent('Pos').pos_;
         pos[0] = player_pos[0];
-        pos[1] = player_pos[1] - 60;
+        pos[1] = player_pos[1] - 40;
 
         const rot = entity.getComponent('Rot').rot_;
         rot[2] = Math.acos(vec3.dot(touch_dir, GUpV)) * GRadToDegree;
