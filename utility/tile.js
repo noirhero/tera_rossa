@@ -29,7 +29,7 @@ TileMap.CanMove = function(tiles, dest_pos_) {
       }
     });
 
-    console.log(`tilecollision: ${' : '} ${comp_tile.collision_}`);
+    //console.log(`tilecollision: ${' : '} ${comp_tile.collision_}`);
     return collision_type !== GTileCollisionType.Block;
   };
   

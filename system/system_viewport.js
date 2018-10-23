@@ -33,9 +33,9 @@ const SystemViewport = CES.System.extend({
     this.world.getEntities('Viewport').forEach(function(entity) {
       comp_viewport = entity.getComponent('Viewport');
 
-      // vec3.copy(comp_viewport.pos_, player_pos);
-      // comp_viewport.pos_[0] *= inv_double_width;
-      // comp_viewport.pos_[1] *= inv_double_height;
+      vec3.copy(comp_viewport.pos_, player_pos);
+      comp_viewport.pos_[0] *= inv_double_width;
+      comp_viewport.pos_[1] *= inv_double_height;
 
       vec3.add(comp_viewport.target_, comp_viewport.pos_, comp_viewport.dir_);
       mat4.targetTo(comp_viewport.transform_view_, comp_viewport.pos_, comp_viewport.target_, comp_viewport.up_);
