@@ -118,7 +118,7 @@ const SystemTileMap = CES.System.extend({
       let pos_x = (comp_tile.tile_pos_[0] - (GTileLength_x / 2)) * GTile_size;        
       let pos_y = (comp_tile.tile_pos_[1] - (GTileLength_y / 2)) * GTile_size; 
 
-      console.log(`tile: ${comp_tile.tile_pos_[0]} ${' / '} ${comp_tile.tile_pos_[1]} ${' pos: '} ${pos_x} ${' / '} ${pos_y}`);
+     // console.log(`tile: ${comp_tile.tile_pos_[0]} ${' / '} ${comp_tile.tile_pos_[1]} ${' pos: '} ${pos_x} ${' / '} ${pos_y}`);
 
       let texture_path;
       switch(comp_tile.collision_){
@@ -129,7 +129,7 @@ const SystemTileMap = CES.System.extend({
       }
 
       entity.addComponent(new ComponentScale(GTile_size, GTile_size));
-      entity.addComponent(new ComponentPos(pos_x, pos_y));
+      entity.addComponent(new ComponentPos(pos_x, pos_y, 100));
       entity.addComponent(new ComponentTexture(texture_path, context.GL));
       entity.addComponent(new ComponentTexcoord());      
     });

@@ -22,7 +22,7 @@ const GEmptyTexcoord = [
 ];
 
 const GLimitTexture = 8; // iphone 5s, samsung galaxy note 3
-const GMoveEpsilon = 0.069;
+const GMoveEpsilon = 1;
 
 const GTile_size = 100;
 const GTileLength_x = 8;
