@@ -53,10 +53,13 @@ const SystemInputKeydown = CES.System.extend({
 
       dest_pos_comp.delta_ = 0;
       vec3.copy(dest_pos_comp.src_pos_, dest_pos_comp.dest_pos_);
-      vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.src_pos_, direction, 30);
+      vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.src_pos_, direction, GTile_size);
+
       return true;
     });
 
+    //test
+    console.log(`tileMap : ${TileMap.CanMove(this.world.getEntities('Tile'), dest_pos_comp.dest_pos_)}`);
     vec3.set(direction, 0, 0, 0);
   }
 });

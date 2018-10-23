@@ -20,6 +20,9 @@ class SceneGame extends Scene {
     world.addSystem(new SystemSoundListener());
     world.addSystem(new SystemMoveSoundEffect());
 
+    let start_pos = TileMap.GetStartPosition();
+    let end_pos = TileMap.GetEndPosition();
+
     const entity_viewport = new CES.Entity();
     entity_viewport.addComponent(new ComponentViewport());
     entity_viewport.addComponent(new ComponentTurn());
@@ -37,8 +40,8 @@ class SceneGame extends Scene {
     const entity_tera = new CES.Entity();
     entity_arrow.addComponent(new ComponentArrow());
     entity_tera.addComponent(new ComponentScale(60, 90));
-    entity_tera.addComponent(new ComponentPos(100, 40));
-    entity_tera.addComponent(new ComponentDestPos(100, 40));
+    entity_tera.addComponent(new ComponentPos(end_pos.x, end_pos.y));
+    entity_tera.addComponent(new ComponentDestPos(end_pos.x, end_pos.y));
     entity_tera.addComponent(new ComponentAnimState('data/animation/tera.json', 'idle'));
     entity_tera.addComponent(new ComponentTexture('data/sprite/tera.png', context.GL));
     entity_tera.addComponent(new ComponentTexcoord());
@@ -47,8 +50,8 @@ class SceneGame extends Scene {
     const entity_rossa = new CES.Entity();
     entity_rossa.addComponent(new ComponentPlayer());
     entity_rossa.addComponent(new ComponentScale(60, 90));
-    entity_rossa.addComponent(new ComponentPos(0, 0));
-    entity_rossa.addComponent(new ComponentDestPos(0, 0));
+    entity_rossa.addComponent(new ComponentPos(start_pos.x, start_pos.y));
+    entity_rossa.addComponent(new ComponentDestPos(start_pos.x, start_pos.y));
     entity_rossa.addComponent(new ComponentAnimState('data/animation/rossa.json', 'idle', 0, true));
     entity_rossa.addComponent(new ComponentTexture('data/sprite/rossa.png', context.GL));
     entity_rossa.addComponent(new ComponentTexcoord());
@@ -56,8 +59,8 @@ class SceneGame extends Scene {
 
     const entity_sorcerer = new CES.Entity();
     entity_sorcerer.addComponent(new ComponentScale(60, 85));
-    entity_sorcerer.addComponent(new ComponentPos(140, 38));
-    entity_sorcerer.addComponent(new ComponentDestPos(140, 38));
+    entity_sorcerer.addComponent(new ComponentPos(end_pos.x, end_pos.y));
+    entity_sorcerer.addComponent(new ComponentDestPos(end_pos.x, end_pos.y));
     entity_sorcerer.addComponent(new ComponentAnimState('data/animation/sorcerer.json', 'idle'));
     entity_sorcerer.addComponent(new ComponentTexture('data/sprite/sorcerer.png', context.GL));
     entity_sorcerer.addComponent(new ComponentTexcoord());

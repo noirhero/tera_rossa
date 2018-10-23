@@ -64,10 +64,10 @@ const SystemAI = CES.System.extend({
       vec3.copy(dest_pos_comp.src_pos_, dest_pos_comp.dest_pos_);
 
       switch(Math.RangeRandomInt(0, 4)) {
-      case 0: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GRightV, 30); break;
-      case 1: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GLeftV, 30); break;
-      case 2: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GUpV, 30); break;
-      case 3: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GDownV, 30); break;
+      case 0: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GRightV, GTile_size); break;
+      case 1: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GLeftV, GTile_size); break;
+      case 2: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GUpV, GTile_size); break;
+      case 3: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GDownV, GTile_size); break;
       }
     });
   }
