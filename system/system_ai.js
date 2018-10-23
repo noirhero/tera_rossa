@@ -35,6 +35,10 @@ const SystemAI = CES.System.extend({
           return;
         }
 
+        if(1 > entity.getComponent('DestPos').delta_) {
+          return;
+        }
+
         let player_pos = player_entity[0].getComponent('Pos').pos_;
         let enemy_pos = entity.getComponent('Pos').pos_;
 
