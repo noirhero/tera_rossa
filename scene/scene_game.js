@@ -41,7 +41,7 @@ class SceneGame extends Scene {
     entity_arrow.addComponent(new ComponentArrow());
     entity_tera.addComponent(new ComponentScale(60, 90));
     entity_tera.addComponent(new ComponentPos(end_pos.x, end_pos.y));
-    entity_tera.addComponent(new ComponentDestPos(end_pos.x, end_pos.y));
+    //entity_tera.addComponent(new ComponentDestPos(end_pos.x, end_pos.y));
     entity_tera.addComponent(new ComponentAnimState('data/animation/tera.json', 'idle'));
     entity_tera.addComponent(new ComponentTexture('data/sprite/tera.png', context.GL));
     entity_tera.addComponent(new ComponentTexcoord());
@@ -73,10 +73,10 @@ class SceneGame extends Scene {
     entity_gameover.addComponent(new ComponentTexcoord());
     entity_gameover.addComponent(new ComponentGameover());
     let gameover_texture = new ComponentTexture('data/texture/gameover.png', context.GL);
-    gameover_texture.texture_.SetRenderable(false); 
+    gameover_texture.texture_.SetRenderable(false);
     entity_gameover.addComponent(gameover_texture);
     world.addEntity(entity_gameover);
-    
+
     this.DefaultContextStates_();
   }
 

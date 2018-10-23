@@ -23,7 +23,7 @@ const SystemInputKeydown = CES.System.extend({
     if(GGameover) {
       return;
     }
-    
+
     const turn_entity = this.world.getEntities('Turn');
     if(0 === turn_entity.length) {
       return;
@@ -65,8 +65,6 @@ const SystemInputKeydown = CES.System.extend({
       return true;
     });
 
-    //test
-    console.log(`tileMap : ${TileMap.CanMove(tiles, dest_pos_comp.dest_pos_)}`);
     vec3.set(direction, 0, 0, 0);
   }
 });

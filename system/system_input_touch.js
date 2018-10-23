@@ -66,7 +66,7 @@ const SystemInputTouch = CES.System.extend({
     if(GGameover) {
       return;
     }
-    
+
     const turn_entity = this.world.getEntities('Turn');
     if(0 === turn_entity.length) {
       return;
@@ -117,6 +117,8 @@ const SystemInputTouch = CES.System.extend({
     }
 
     let dest_pos_comp = null;
+    let temp_dest_pos = vec3.create();
+    const tiles = this.world.getEntities('Tile');
 
     this.world.getEntities('DestPos').some(function(entity) {
       dest_pos_comp = entity.getComponent('DestPos');
@@ -125,6 +127,11 @@ const SystemInputTouch = CES.System.extend({
       }
       else if(!entity.getComponent('Player')) {
         return false;
+      }
+
+      vec3.scaleAndAdd(temp_dest_pos, dest_pos_comp.dest_pos_, direction, GTile_size);
+      if(false === TileMap.CanMove(tiles, temp_dest_pos)) {
+        return true;
       }
 
       dest_pos_comp.delta_ = 0;
