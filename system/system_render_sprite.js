@@ -115,8 +115,7 @@ const SystemRenderSprite = CES.System.extend({
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, GBatchQuadV_XYZIUV);
 
       const num_bind_textures = bind_textures.length;
-      gl.bindTexture(gl.TEXTURE_2D, bind_textures[0].GetTexture());
-      for(let bi = 1; bi < num_bind_textures; ++bi) {
+      for(let bi = 0; bi < num_bind_textures; ++bi) {
         gl.activeTexture(gl.TEXTURE0 + bi);
         gl.bindTexture(gl.TEXTURE_2D, bind_textures[bi].GetTexture());
       }
@@ -139,7 +138,9 @@ const SystemRenderSprite = CES.System.extend({
     let world_pos = vec3.create();
     let comp_rot = null;
 
-    post_process.Begin();
+    if(false === GGameover) {
+      post_process.Begin();
+    }
 
     world.getEntities('Scale', 'Pos', 'Texture', 'Texcoord').forEach((function(entity) {
       current_texture = entity.getComponent('Texture').texture_;
@@ -186,7 +187,7 @@ const SystemRenderSprite = CES.System.extend({
 
         GBatchQuadV_XYZIUV[offset++] = world_pos[0];
         GBatchQuadV_XYZIUV[offset++] = world_pos[1];
-        GBatchQuadV_XYZIUV[offset++] = world_transform[13];
+        GBatchQuadV_XYZIUV[offset++] = (0 === pos[2]) ? world_transform[13] : pos[2];
         GBatchQuadV_XYZIUV[offset++] = texcoord[i][0];
         GBatchQuadV_XYZIUV[offset++] = texcoord[i][1];
         GBatchQuadV_XYZIUV[offset++] = texture_index;
@@ -197,12 +198,15 @@ const SystemRenderSprite = CES.System.extend({
       }
     }).bind(this));
 
-    if(0 === num_draw) {
+    if(0 === num_draw && false === GGameover) {
       post_process.End();
       return;
     }
 
     Draw_.call(this);
-    post_process.End();
+
+    if(false === GGameover) {
+      post_process.End();
+    }
   }
 });

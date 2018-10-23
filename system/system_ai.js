@@ -17,6 +17,7 @@ const SystemAI = CES.System.extend({
 
     const turn_comp = turn_entity[0].getComponent('Turn');
     if(true === turn_comp.is_player_turn_) {
+      // checking gameover
       let gameover_entity = this.world.getEntities('Gameover', 'Texture');
       if(0 === gameover_entity.length) {
         return;
@@ -37,12 +38,11 @@ const SystemAI = CES.System.extend({
         let player_pos = player_entity[0].getComponent('Pos').pos_;
         let enemy_pos = entity.getComponent('Pos').pos_;
 
-        vec3.copy(gameover_pos.pos_, player_pos);
+        vec2.copy(gameover_pos.pos_, player_pos);
 
-        let gap = vec2.fromValues(player_pos[0] - enemy_pos[0], player_pos[1] - enemy_pos[1]);
-        let dist = (gap[0] * gap[0]) + (gap[1] * gap[1]);
-        if(Math.sqrt(dist) <= 20) {
+        if(vec2.distance(player_pos, enemy_pos) <= 20) {
           gameover_texture.SetRenderable(true);
+          GGameover = true;
         }
       });
       return;

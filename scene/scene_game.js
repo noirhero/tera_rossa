@@ -16,6 +16,7 @@ class SceneGame extends Scene {
     world.addSystem(new SystemTurn());
     world.addSystem(new SystemAI());
     world.addSystem(new SystemSoundBGM());
+    world.addSystem(new SystemTileMap(context, world));
     world.addSystem(new SystemSoundListener());
     world.addSystem(new SystemMoveSoundEffect());
 
@@ -33,25 +34,6 @@ class SceneGame extends Scene {
     entity_arrow.addComponent(new ComponentTexcoord());
     world.addEntity(entity_arrow);
 
-    const entity_gameover = new CES.Entity();
-    
-    entity_gameover.addComponent(new ComponentScale(256, 256));
-    entity_gameover.addComponent(new ComponentPos(100,0));
-    entity_gameover.addComponent(new ComponentTexcoord());
-    entity_gameover.addComponent(new ComponentGameover());
-
-    let gameover_texture = new ComponentTexture('data/texture/gameover.png', context.GL);
-    gameover_texture.texture_.SetRenderable(false);
-    entity_gameover.addComponent(gameover_texture);
-    world.addEntity(entity_gameover);
-
-    // const entity_clear = new CES.Entity();
-    // entity_clear.addComponent(new ComponentScale(256, 256));
-    // entity_clear.addComponent(new ComponentPos(0,0));
-    // entity_clear.addComponent(new ComponentTexture('data/texture/clear.png', context.GL));
-    // entity_clear.addComponent(new ComponentTexcoord());
-    // world.addEntity(entity_clear);
-
     const entity_tera = new CES.Entity();
     entity_arrow.addComponent(new ComponentArrow());
     entity_tera.addComponent(new ComponentScale(60, 90));
@@ -65,8 +47,8 @@ class SceneGame extends Scene {
     const entity_rossa = new CES.Entity();
     entity_rossa.addComponent(new ComponentPlayer());
     entity_rossa.addComponent(new ComponentScale(60, 90));
-    entity_rossa.addComponent(new ComponentPos(-100, 40));
-    entity_rossa.addComponent(new ComponentDestPos(-100, 40));
+    entity_rossa.addComponent(new ComponentPos(0, 0));
+    entity_rossa.addComponent(new ComponentDestPos(0, 0));
     entity_rossa.addComponent(new ComponentAnimState('data/animation/rossa.json', 'idle', 0, true));
     entity_rossa.addComponent(new ComponentTexture('data/sprite/rossa.png', context.GL));
     entity_rossa.addComponent(new ComponentTexcoord());
@@ -82,9 +64,16 @@ class SceneGame extends Scene {
     entity_sorcerer.addComponent(new ComponentSoundEffect('data/sound/laugh_sorcerer'));
     world.addEntity(entity_sorcerer);
 
+    const entity_gameover = new CES.Entity();
+    entity_gameover.addComponent(new ComponentScale(256, 256));
+    entity_gameover.addComponent(new ComponentPos(0, 0, -999));
+    entity_gameover.addComponent(new ComponentTexcoord());
+    entity_gameover.addComponent(new ComponentGameover());
+    let gameover_texture = new ComponentTexture('data/texture/gameover.png', context.GL);
+    gameover_texture.texture_.SetRenderable(false); 
+    entity_gameover.addComponent(gameover_texture);
+    world.addEntity(entity_gameover);
     
-   
-
     this.DefaultContextStates_();
   }
 

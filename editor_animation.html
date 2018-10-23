@@ -2,15 +2,13 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>TERA_ROSSA</title>
+    <title>TAP_EDITOR_ANIMATION</title>
     <link href="main.css" rel="stylesheet" type="text/css" />
-    <link rel="apple-touch-icon" sizes="128x128" href="data/icon/icon.png">
 
     <script type="text/javascript" src="thirdparty/ces-browser.js"></script>
     <script type="text/javascript" src="thirdparty/gl-matrix.js"></script>
-    <script type="text/javascript" src="thirdparty/howler.js"></script>
+    <script type="text/javascript" src="thirdparty/controlKit.js"></script>
 
-    <script type="text/javascript" src="utility/tile.js"></script>
     <script type="text/javascript" src="utility/timer.js"></script>
     <script type="text/javascript" src="utility/read_file.js"></script>
     <script type="text/javascript" src="utility/batch_buffer.js"></script>
@@ -32,9 +30,7 @@
     <script type="text/javascript" src="component/component_dest_pos.js"></script>
     <script type="text/javascript" src="component/component_turn.js"></script>
     <script type="text/javascript" src="component/component_sound_bgm.js"></script>
-    <script type="text/javascript" src="component/component_tile.js"></script>
     <script type="text/javascript" src="component/component_sound_effect.js"></script>
-    <script type="text/javascript" src="component/component_gameover.js"></script>
 
     <script type="text/javascript" src="system/system_viewport.js"></script>
     <script type="text/javascript" src="system/system_animation.js"></script>
@@ -45,17 +41,15 @@
     <script type="text/javascript" src="system/system_turn.js"></script>
     <script type="text/javascript" src="system/system_ai.js"></script>
     <script type="text/javascript" src="system/system_sound_bgm.js"></script>
-    <script type="text/javascript" src="system/system_tile_map.js"></script>
     <script type="text/javascript" src="system/system_sound_listener.js"></script>
     <script type="text/javascript" src="system/system_move_sound_effect.js"></script>
 
     <script type="text/javascript" src="scene/frame.js"></script>
     <script type="text/javascript" src="scene/scene.js"></script>
-    <script type="text/javascript" src="scene/scene_game.js"></script>
 
-    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="editor_animation/main.js"></script>
   </head>
-  <body id="main" onload="Main()">
+  <body id="main" onload="EditorAnimMain()">
     <canvas id="main_canvas" width="1" height="1"></canvas>
   </body>
 </html>
