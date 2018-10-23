@@ -81,7 +81,6 @@ class SceneGame extends Scene {
 
     gl.enableVertexAttribArray(0);
     gl.enableVertexAttribArray(1);
-    gl.enableVertexAttribArray(2);
   }
 
   ContextRestored_(event) {

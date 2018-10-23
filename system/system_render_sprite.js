@@ -106,6 +106,7 @@ const SystemRenderSprite = CES.System.extend({
         gl.uniformMatrix4fv(this.u_vp_transform_, false, comp_viewport.transform_vp_);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ib_);
         gl.bindBuffer(gl.ARRAY_BUFFER, this.vb_);
+        gl.enableVertexAttribArray(2);
         gl.vertexAttribPointer(a_world_pos, 3, gl.FLOAT, false, 24, 0);
         gl.vertexAttribPointer(a_tex_coord, 2, gl.FLOAT, false, 24, 12);
         gl.vertexAttribPointer(a_tex_index, 1, gl.FLOAT, false, 24, 20);

@@ -52,7 +52,7 @@ class PostProcess {
     const u_window_size_ = this.u_window_size_;
     const window_size_ = this.window_size_ = vec2.fromValues(width, height);
     const u_torch_radius_ = this.u_torch_radius_;
-    let torch_radius = Math.RangeRandom(40, 50);
+    let torch_radius = Math.RangeRandom(40, 60);
 
     gl.disable(gl.DEPTH_TEST);
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
@@ -72,6 +72,7 @@ class PostProcess {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vb_);
     gl.vertexAttribPointer(this.a_projection_pos_, 2, gl.FLOAT, false, 16, 0);
     gl.vertexAttribPointer(this.a_tex_coord_, 2, gl.FLOAT, false, 16, 8);
+    gl.disableVertexAttribArray(2);
 
     gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
   }
