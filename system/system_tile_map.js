@@ -43,6 +43,9 @@ const SystemTileMap = CES.System.extend({
       case 3: end_path = {x : 0, y : random_end_y}; break;
     }
 
+    // 전역 설정
+    TileMap.SetPosition(vec2.fromValues(start_path.x || 0, start_path.y || 0), vec2.fromValues(end_path.x || 0, end_path.y || 0));
+
     //경로 설정
     let locked_x = false;
     let locked_y = false;
@@ -115,10 +118,8 @@ const SystemTileMap = CES.System.extend({
     let comp_tile = null;
     this.world.getEntities('Tile').forEach(function(entity) {
       comp_tile = entity.getComponent('Tile');
-       
-      let pos_x = (comp_tile.tile_pos_[0] - (GTileLength_x * 0.5)) * GTile_size;        
-      let pos_y = (comp_tile.tile_pos_[1] - (GTileLength_y * 0.5)) * GTile_size; 
 
+      let position = TileMap.ConvertToRealPosition(comp_tile.tile_pos_);
 
       let texture_path;
       switch(comp_tile.collision_){
@@ -128,9 +129,9 @@ const SystemTileMap = CES.System.extend({
         default : texture_path = 'data/texture/dungeon_tile.png'; break;
       }
 
-      //console.log(`tile: ${comp_tile.tile_pos_[0]} ${' / '} ${comp_tile.tile_pos_[1]} ${' pos: '} ${pos_x} ${' / '} ${-pos_y}`);
+      //console.log(`tile: ${comp_tile.tile_pos_[0]} ${' / '} ${comp_tile.tile_pos_[1]} ${' pos: '} ${position.x} ${' / '} ${position.y}`);
       entity.addComponent(new ComponentScale(GTile_size, GTile_size));
-      entity.addComponent(new ComponentPos(pos_x, -pos_y, 999));
+      entity.addComponent(new ComponentPos(position.x, position.y, 999));
       entity.addComponent(new ComponentTexture(texture_path, context.GL));
       entity.addComponent(new ComponentTexcoord());
     });
