@@ -33,6 +33,25 @@ class SceneGame extends Scene {
     entity_arrow.addComponent(new ComponentTexcoord());
     world.addEntity(entity_arrow);
 
+    const entity_gameover = new CES.Entity();
+    
+    entity_gameover.addComponent(new ComponentScale(256, 256));
+    entity_gameover.addComponent(new ComponentPos(100,0));
+    entity_gameover.addComponent(new ComponentTexcoord());
+    entity_gameover.addComponent(new ComponentGameover());
+
+    let gameover_texture = new ComponentTexture('data/texture/gameover.png', context.GL);
+    gameover_texture.texture_.SetRenderable(false);
+    entity_gameover.addComponent(gameover_texture);
+    world.addEntity(entity_gameover);
+
+    // const entity_clear = new CES.Entity();
+    // entity_clear.addComponent(new ComponentScale(256, 256));
+    // entity_clear.addComponent(new ComponentPos(0,0));
+    // entity_clear.addComponent(new ComponentTexture('data/texture/clear.png', context.GL));
+    // entity_clear.addComponent(new ComponentTexcoord());
+    // world.addEntity(entity_clear);
+
     const entity_tera = new CES.Entity();
     entity_arrow.addComponent(new ComponentArrow());
     entity_tera.addComponent(new ComponentScale(60, 90));
@@ -62,6 +81,9 @@ class SceneGame extends Scene {
     entity_sorcerer.addComponent(new ComponentTexcoord());
     entity_sorcerer.addComponent(new ComponentSoundEffect('data/sound/laugh_sorcerer'));
     world.addEntity(entity_sorcerer);
+
+    
+   
 
     this.DefaultContextStates_();
   }
