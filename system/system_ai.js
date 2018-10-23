@@ -12,43 +12,34 @@ const SystemAI = CES.System.extend({
       return;
     }
 
-    let pos = null;
-    let dest_pos = null;
-    let velocity = vec3.create();
-
-    function CalculateSpeed_(entity) {
-      pos = entity.getComponent('Pos').pos_;
-      dest_pos = entity.getComponent('DestPos').dest_pos_;
-      vec3.subtract(velocity, dest_pos, pos);
-      return vec3.dot(velocity, velocity);
+    const player_entity = this.world.getEntities('Player', 'DestPos');
+    if(0 === player_entity.length) {
+      return;
     }
-
-    let is_moving_player = false;
-    this.world.getEntities('Player', 'Pos', 'DestPos').some(function(entity) {
-      if(GMoveEpsilon < CalculateSpeed_(entity)) {
-        is_moving_player = true;
-        return true;
-      }
-      return false;
-    });
-
-    if(true === is_moving_player) {
+    else if(1 > player_entity[0].getComponent('DestPos').delta_) {
       return;
     }
 
-    this.world.getEntities('Pos', 'DestPos').forEach(function(entity) {
+    let dest_pos_comp = null;
+
+    this.world.getEntities('DestPos').forEach(function(entity) {
       if(entity.getComponent('Player')) {
         return;
       }
-      else if(GMoveEpsilon < CalculateSpeed_(entity)) {
+
+      dest_pos_comp = entity.getComponent('DestPos');
+      if(1 > dest_pos_comp.delta_) {
         return;
       }
 
+      dest_pos_comp.delta_ = 0;
+      vec3.copy(dest_pos_comp.src_pos_, dest_pos_comp.dest_pos_);
+
       switch(Math.RangeRandomInt(0, 4)) {
-      case 0: vec3.scaleAndAdd(dest_pos, dest_pos, GRightV, 30); break;
-      case 1: vec3.scaleAndAdd(dest_pos, dest_pos, GLeftV, 30); break;
-      case 2: vec3.scaleAndAdd(dest_pos, dest_pos, GUpV, 30); break;
-      case 3: vec3.scaleAndAdd(dest_pos, dest_pos, GDownV, 30); break;
+      case 0: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GRightV, 30); break;
+      case 1: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GLeftV, 30); break;
+      case 2: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GUpV, 30); break;
+      case 3: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GDownV, 30); break;
       }
     });
   }

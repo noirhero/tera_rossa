@@ -62,9 +62,12 @@ const SystemRenderSprite = CES.System.extend({
     this.a_tex_index_ = gl.getAttribLocation(program, 'tex_index');
     this.u_vp_transform_ = gl.getUniformLocation(program, 'vp_transform');
     this.s_sprite_ = gl.getUniformLocation(program, 'sampler_sprite');
+
+    //this.post_process_ = new PostProcess(context);
   },
   update: function() {
     const gl = this.gl_;
+    const post_process = this.post_process_;
     const world = this.world;
     const s_sprite = this.s_sprite_;
     const num_max_offset = GBatchQuadV_XYZIUV.length;
@@ -85,7 +88,12 @@ const SystemRenderSprite = CES.System.extend({
         }
 
         const comp_viewport = entity_viewports[0].getComponent('Viewport');
-        gl.viewport(0, 0, comp_viewport.width_, comp_viewport.height_);
+        if(comp_viewport.width_ !== this.width_ || comp_viewport.height_ !== this.height_) {
+          gl.viewport(0, 0, comp_viewport.width_, comp_viewport.height_);
+
+          this.width_ = comp_viewport.width_;
+          this.height_ = comp_viewport.height_;
+        }
 
         gl.enable(gl.DEPTH_TEST);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -97,20 +105,18 @@ const SystemRenderSprite = CES.System.extend({
         gl.useProgram(this.program_);
         gl.uniformMatrix4fv(this.u_vp_transform_, false, comp_viewport.transform_vp_);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ib_);
-
         gl.bindBuffer(gl.ARRAY_BUFFER, this.vb_);
+        gl.enableVertexAttribArray(2);
         gl.vertexAttribPointer(a_world_pos, 3, gl.FLOAT, false, 24, 0);
-        gl.enableVertexAttribArray(a_world_pos);
         gl.vertexAttribPointer(a_tex_coord, 2, gl.FLOAT, false, 24, 12);
-        gl.enableVertexAttribArray(a_tex_coord);
         gl.vertexAttribPointer(a_tex_index, 1, gl.FLOAT, false, 24, 20);
-        gl.enableVertexAttribArray(a_tex_index);
       }
 
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, GBatchQuadV_XYZIUV);
 
       const num_bind_textures = bind_textures.length;
-      for(let bi = 0; bi < num_bind_textures; ++bi) {
+      gl.bindTexture(gl.TEXTURE_2D, bind_textures[0].GetTexture());
+      for(let bi = 1; bi < num_bind_textures; ++bi) {
         gl.activeTexture(gl.TEXTURE0 + bi);
         gl.bindTexture(gl.TEXTURE_2D, bind_textures[bi].GetTexture());
       }
@@ -125,15 +131,19 @@ const SystemRenderSprite = CES.System.extend({
     }
 
     let scale = null;
+    let rot = quat.create();
     let pos = null;
     let texcoord = null;
     let current_texture = null;
     let world_transform = mat4.create();
     let world_pos = vec3.create();
+    let comp_rot = null;
+
+    //post_process.Begin();
 
     world.getEntities('Scale', 'Pos', 'Texture', 'Texcoord').forEach((function(entity) {
       current_texture = entity.getComponent('Texture').texture_;
-      if(false === current_texture.IsLoaded()) {
+      if(false === current_texture.IsRenderable()) {
         return;
       }
 
@@ -162,7 +172,14 @@ const SystemRenderSprite = CES.System.extend({
       pos = entity.getComponent('Pos').pos_;
       texcoord = entity.getComponent('Texcoord').texcoord_;
 
-      mat4.fromRotationTranslationScale(world_transform, GQuatI, pos, scale);
+      comp_rot = entity.getComponent('Rot');
+      if(comp_rot) {
+        quat.fromEuler(rot, comp_rot.rot_[0], comp_rot.rot_[1], comp_rot.rot_[2]);
+        mat4.fromRotationTranslationScale(world_transform, rot, pos, scale);
+      }
+      else {
+        mat4.fromRotationTranslationScale(world_transform, GQuatI, pos, scale);
+      }
 
       for(let i = 0; i < 4; ++i) {
         vec3.transformMat4(world_pos, GQuadLocalPos[i], world_transform);
@@ -181,8 +198,11 @@ const SystemRenderSprite = CES.System.extend({
     }).bind(this));
 
     if(0 === num_draw) {
+      //post_process.End();
       return;
     }
+
     Draw_.call(this);
+    //post_process.End();
   }
 });

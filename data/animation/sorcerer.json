@@ -1,22 +1,6 @@
 { "frames": {
-   "idle 0.ase": {
-    "frame": { "x": 0, "y": 0, "w": 40, "h": 48 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
-    "sourceSize": { "w": 40, "h": 48 },
-    "duration": 150
-   },
-   "idle 1.ase": {
-    "frame": { "x": 40, "y": 0, "w": 40, "h": 48 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
-    "sourceSize": { "w": 40, "h": 48 },
-    "duration": 150
-   },
    "walk 0.ase": {
-    "frame": { "x": 80, "y": 0, "w": 40, "h": 48 },
+    "frame": { "x": 0, "y": 0, "w": 44, "h": 52 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
@@ -24,7 +8,7 @@
     "duration": 100
    },
    "walk 1.ase": {
-    "frame": { "x": 0, "y": 48, "w": 40, "h": 48 },
+    "frame": { "x": 44, "y": 0, "w": 44, "h": 52 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
@@ -32,7 +16,7 @@
     "duration": 100
    },
    "walk 2.ase": {
-    "frame": { "x": 40, "y": 48, "w": 40, "h": 48 },
+    "frame": { "x": 88, "y": 0, "w": 44, "h": 52 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
@@ -40,12 +24,28 @@
     "duration": 100
    },
    "walk 3.ase": {
-    "frame": { "x": 80, "y": 48, "w": 40, "h": 48 },
+    "frame": { "x": 132, "y": 0, "w": 44, "h": 52 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
     "sourceSize": { "w": 40, "h": 48 },
     "duration": 100
+   },
+   "idle 0.ase": {
+    "frame": { "x": 176, "y": 0, "w": 44, "h": 52 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
+    "sourceSize": { "w": 40, "h": 48 },
+    "duration": 150
+   },
+   "idle 1.ase": {
+    "frame": { "x": 0, "y": 52, "w": 44, "h": 52 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 48 },
+    "sourceSize": { "w": 40, "h": 48 },
+    "duration": 150
    }
  },
  "meta": {
@@ -53,7 +53,7 @@
   "version": "1.2.9",
   "image": "sorcerer.png",
   "format": "RGBA8888",
-  "size": { "w": 128, "h": 128 },
+  "size": { "w": 256, "h": 256 },
   "scale": "1"
  }
 }

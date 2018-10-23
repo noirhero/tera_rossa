@@ -5,42 +5,32 @@ const SystemAnimation = CES.System.extend({
     let comp_anim_state = null;
     let comp_texcoord = null;
 
-    let pos = null;
-    let dest_pos = null;
-    let pos_at_dest = vec3.create();
+    let dest_pos_comp = null;
 
     let reverse_x = undefined;
     let state = null;
-    let speed = 0;
-    
-    function IsReverseX_(in_x) {
-      if(-0.1 > in_x) {
-        return false;
-      }
-      else if(0.1 < in_x) {
+
+    function IsReverseX_(src_pos, dest_pos) {
+      if(src_pos[0] < dest_pos[0]) {
         return true;
+      }
+      if(src_pos[0] > dest_pos[0]) {
+        return false;
       }
 
       return undefined;
     }
 
-    function IsMoving_(pos_at_dest) {
-      speed = vec3.dot(pos_at_dest, pos_at_dest);
-      return (GMoveEpsilon < speed);
-    }
-
-    this.world.getEntities('AnimState', 'Texcoord').forEach(function(entity) {
-      pos = entity.getComponent('Pos').pos_;
-      dest_pos = entity.getComponent('DestPos').dest_pos_;
-      vec3.subtract(pos_at_dest, dest_pos, pos);      
+    this.world.getEntities('Pos', 'DestPos', 'AnimState', 'Texcoord').forEach(function(entity) {
+      dest_pos_comp = entity.getComponent('DestPos');
 
       comp_anim_state = entity.getComponent('AnimState');
-      reverse_x = IsReverseX_(pos_at_dest[0]);
+      reverse_x = IsReverseX_(dest_pos_comp.src_pos_, dest_pos_comp.dest_pos_);
       if(undefined !== reverse_x) {
         comp_anim_state.reverse_x_ = reverse_x;
-      }      
+      }
 
-      state = IsMoving_(pos_at_dest) ? 'walk' : 'idle';
+      state = (1 > dest_pos_comp.delta_) ? 'walk' : 'idle';
       if(-1 === comp_anim_state.state_.indexOf(state)) {
         comp_anim_state.state_ = state;
         comp_anim_state.duration_ = 0;
@@ -50,7 +40,7 @@ const SystemAnimation = CES.System.extend({
       }
 
       comp_texcoord = entity.getComponent('Texcoord');
-      comp_texcoord.texcoord_ = comp_anim_state.anim_.GetTextureCoordinate(comp_anim_state.state_, comp_anim_state.duration_, comp_anim_state.reverse_x_);      
+      comp_texcoord.texcoord_ = comp_anim_state.anim_.GetTextureCoordinate(comp_anim_state.state_, comp_anim_state.duration_, comp_anim_state.reverse_x_);
     });
   }
 });

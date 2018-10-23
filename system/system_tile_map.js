@@ -52,8 +52,7 @@ const SystemTileMap = CES.System.extend({
     let direction_path = { x : end_path.x === start_path.x ? 0 : end_path.x > start_path.x ? 1 : -1,
                            y : end_path.y === start_path.y ? 0 : end_path.y > start_path.y ? 1 : -1};
 
-    while(true){
-
+    while(true){      
       path_stack.push(cached_path);
       weight_path = path_stack[path_stack.length-1];
 
@@ -99,8 +98,10 @@ const SystemTileMap = CES.System.extend({
         if(collision_type !== GTileCollisionType.Path){
           let bonus_path = (Math.RangeRandomInt(0, GTile_BonusRandomMax) === 0);
           collision_type = bonus_path ? GTileCollisionType.BonusPath : GTileCollisionType.Block;
+         //collision_type = GTileCollisionType.Block;
         }
 
+        //console.log(`tile: ${x} ${' / '} ${y}${' / '} ${collision_type}`);
         const entity_tile = new CES.Entity();
         entity_tile.addComponent(new ComponentTile(x, y, collision_type));
         world.addEntity(entity_tile);
@@ -118,7 +119,6 @@ const SystemTileMap = CES.System.extend({
       let pos_x = (comp_tile.tile_pos_[0] - (GTileLength_x / 2)) * GTile_size;        
       let pos_y = (comp_tile.tile_pos_[1] - (GTileLength_y / 2)) * GTile_size; 
 
-     // console.log(`tile: ${comp_tile.tile_pos_[0]} ${' / '} ${comp_tile.tile_pos_[1]} ${' pos: '} ${pos_x} ${' / '} ${pos_y}`);
 
       let texture_path;
       switch(comp_tile.collision_){
@@ -128,10 +128,11 @@ const SystemTileMap = CES.System.extend({
         default : texture_path = 'data/texture/dungeon_tile.png'; break;
       }
 
+      //console.log(`tile: ${comp_tile.tile_pos_[0]} ${' / '} ${comp_tile.tile_pos_[1]} ${','} ${comp_tile.collision_} ${'//'} ${texture_path} ${'//'} ${' pos: '} ${pos_x} ${' / '} ${-pos_y}`);
       entity.addComponent(new ComponentScale(GTile_size, GTile_size));
-      entity.addComponent(new ComponentPos(pos_x, pos_y, 100));
+      entity.addComponent(new ComponentPos(pos_x, -pos_y, 0));
       entity.addComponent(new ComponentTexture(texture_path, context.GL));
-      entity.addComponent(new ComponentTexcoord());      
+      entity.addComponent(new ComponentTexcoord());
     });
   },
 

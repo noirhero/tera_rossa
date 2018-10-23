@@ -7,21 +7,10 @@ const SystemTurn = CES.System.extend({
       return;
     }
 
-    let pos = null;
-    let dest_pos = null;
-    let velocity = vec3.create();
-
-    function CalculateSpeed_(entity) {
-      pos = entity.getComponent('Pos').pos_;
-      dest_pos = entity.getComponent('DestPos').dest_pos_;
-      vec3.subtract(velocity, dest_pos, pos);
-      return vec3.dot(velocity, velocity);
-    }
-
     const turn_comp = turn_entity[0].getComponent('Turn');
     if(true === turn_comp.is_player_turn_) {
-      this.world.getEntities('Player', 'Pos', 'DestPos').some(function(entity) {
-        if(GMoveEpsilon < CalculateSpeed_(entity)) {
+      this.world.getEntities('Player', 'DestPos').some(function(entity) {
+        if(1 > entity.getComponent('DestPos').delta_) {
           turn_comp.is_player_turn_ = false;
           return true;
         }
@@ -34,7 +23,7 @@ const SystemTurn = CES.System.extend({
         if(entity.getComponent('Player')) {
           return false;
         }
-        else if(GMoveEpsilon < CalculateSpeed_(entity)) {
+        else if(1 > entity.getComponent('DestPos').delta_) {
           turn_comp.is_player_turn_ = true;
           return true;
         }

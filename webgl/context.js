@@ -1,12 +1,25 @@
 // Copyright 2018 TAP, Inc. All Rights Reserved.
 
+function IgnoreEvent(event) {
+  event.preventDefault();
+}
+
 class WebGLContext {
   constructor() {
+    const main = document.getElementById('main');
+    main.ontouchmove = IgnoreEvent;
+
     const canvas = document.getElementById('main_canvas');
-    const gl = canvas.getContext('webgl', {
+    canvas.ontouchmove = IgnoreEvent;
+
+    const options = {
       premultipliedAlpha: false,
       antialias: false,
-    });
+    };
+    const gl = canvas.getContext('webgl', options);
+    if(!gl) {
+      gl = canvas.getContext('experiment-webgl', options);
+    }
 
     this.canvas_ = canvas;
     this.gl_ = gl;
