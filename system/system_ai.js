@@ -52,8 +52,6 @@ const SystemAI = CES.System.extend({
       return;
     }
 
-    let dest_pos_comp = null;
-
     this.world.getEntities('DestPos').forEach(function(entity) {
       if(entity.getComponent('Player')) {
         return;
