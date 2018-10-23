@@ -63,6 +63,10 @@ const SystemInputTouch = CES.System.extend({
     canvas.ontouchmove = TouchMove_;
   },
   update: function() {
+    if(GGameover) {
+      return;
+    }
+    
     const turn_entity = this.world.getEntities('Turn');
     if(0 === turn_entity.length) {
       return;

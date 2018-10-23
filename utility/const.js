@@ -30,3 +30,5 @@ const GTileCollisionType = {Path: 1, Block: 2, BonusPath: 3};
 const GMoveEpsilon = 0.069;
 const GRadToDegree = 180 / Math.PI;
 const GDegreeToRad = Math.PI * 180;
+
+var GGameover = false;

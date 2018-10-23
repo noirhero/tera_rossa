@@ -7,11 +7,6 @@ const SystemAI = CES.System.extend({
       return;
     }
 
-    const turn_comp = turn_entity[0].getComponent('Turn');
-    if(true === turn_comp.is_player_turn_) {
-      return;
-    }
-
     const player_entity = this.world.getEntities('Player', 'DestPos');
     if(0 === player_entity.length) {
       return;
@@ -23,6 +18,41 @@ const SystemAI = CES.System.extend({
     let dest_pos_comp = null;
     let temp_dest_pos = vec3.create();
     const tiles = this.world.getEntities('Tile');
+
+    const turn_comp = turn_entity[0].getComponent('Turn');
+    if(true === turn_comp.is_player_turn_) {
+      // checking gameover
+      let gameover_entity = this.world.getEntities('Gameover', 'Texture');
+      if(0 === gameover_entity.length) {
+        return;
+      }
+
+      let gameover_texture = gameover_entity[0].getComponent('Texture').texture_;
+      const gameover_pos = gameover_entity[0].getComponent('Pos');
+
+      if(!gameover_texture || !gameover_pos) {
+        return;
+      }
+
+      this.world.getEntities('DestPos').forEach(function(entity) {
+        if(entity.getComponent('Player')) {
+          return;
+        }
+
+        let player_pos = player_entity[0].getComponent('Pos').pos_;
+        let enemy_pos = entity.getComponent('Pos').pos_;
+
+        vec2.copy(gameover_pos.pos_, player_pos);
+
+        if(vec2.distance(player_pos, enemy_pos) <= 20) {
+          gameover_texture.SetRenderable(true);
+          GGameover = true;
+        }
+      });
+      return;
+    }
+
+    let dest_pos_comp = null;
 
     this.world.getEntities('DestPos').forEach(function(entity) {
       if(entity.getComponent('Player')) {

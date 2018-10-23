@@ -20,6 +20,10 @@ const SystemInputKeydown = CES.System.extend({
     document.addEventListener('keyup', Keyup_, false);
   },
   update: function() {
+    if(GGameover) {
+      return;
+    }
+    
     const turn_entity = this.world.getEntities('Turn');
     if(0 === turn_entity.length) {
       return;
