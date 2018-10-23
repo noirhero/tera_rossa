@@ -116,8 +116,8 @@ const SystemTileMap = CES.System.extend({
     this.world.getEntities('Tile').forEach(function(entity) {
       comp_tile = entity.getComponent('Tile');
        
-      let pos_x = (comp_tile.tile_pos_[0] - (GTileLength_x / 2)) * GTile_size;        
-      let pos_y = (comp_tile.tile_pos_[1] - (GTileLength_y / 2)) * GTile_size; 
+      let pos_x = (comp_tile.tile_pos_[0] - (GTileLength_x * 0.5)) * GTile_size;        
+      let pos_y = (comp_tile.tile_pos_[1] - (GTileLength_y * 0.5)) * GTile_size; 
 
 
       let texture_path;
@@ -128,7 +128,7 @@ const SystemTileMap = CES.System.extend({
         default : texture_path = 'data/texture/dungeon_tile.png'; break;
       }
 
-      //console.log(`tile: ${comp_tile.tile_pos_[0]} ${' / '} ${comp_tile.tile_pos_[1]} ${','} ${comp_tile.collision_} ${'//'} ${texture_path} ${'//'} ${' pos: '} ${pos_x} ${' / '} ${-pos_y}`);
+      console.log(`tile: ${comp_tile.tile_pos_[0]} ${' / '} ${comp_tile.tile_pos_[1]} ${' pos: '} ${pos_x} ${' / '} ${-pos_y}`);
       entity.addComponent(new ComponentScale(GTile_size, GTile_size));
       entity.addComponent(new ComponentPos(pos_x, -pos_y, 0));
       entity.addComponent(new ComponentTexture(texture_path, context.GL));

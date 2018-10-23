@@ -63,7 +63,7 @@ const SystemRenderSprite = CES.System.extend({
     this.u_vp_transform_ = gl.getUniformLocation(program, 'vp_transform');
     this.s_sprite_ = gl.getUniformLocation(program, 'sampler_sprite');
 
-    this.post_process_ = new PostProcess(context);
+    //this.post_process_ = new PostProcess(context);
   },
   update: function() {
     const gl = this.gl_;
@@ -139,7 +139,7 @@ const SystemRenderSprite = CES.System.extend({
     let world_pos = vec3.create();
     let comp_rot = null;
 
-    post_process.Begin();
+    //post_process.Begin();
 
     world.getEntities('Scale', 'Pos', 'Texture', 'Texcoord').forEach((function(entity) {
       current_texture = entity.getComponent('Texture').texture_;
@@ -198,11 +198,11 @@ const SystemRenderSprite = CES.System.extend({
     }).bind(this));
 
     if(0 === num_draw) {
-      post_process.End();
+      //post_process.End();
       return;
     }
 
     Draw_.call(this);
-    post_process.End();
+    //post_process.End();
   }
 });
