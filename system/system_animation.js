@@ -21,10 +21,17 @@ const SystemAnimation = CES.System.extend({
       return undefined;
     }
 
-    this.world.getEntities('Pos', 'DestPos', 'AnimState', 'Texcoord').forEach(function(entity) {
-      dest_pos_comp = entity.getComponent('DestPos');
-
+    this.world.getEntities('Pos', 'AnimState', 'Texcoord').forEach(function(entity) {
       comp_anim_state = entity.getComponent('AnimState');
+      comp_texcoord = entity.getComponent('Texcoord');
+
+      dest_pos_comp = entity.getComponent('DestPos');
+      if(!dest_pos_comp) {
+        comp_anim_state.duration_ += dt;
+        comp_texcoord.texcoord_ = comp_anim_state.anim_.GetTextureCoordinate(comp_anim_state.state_, comp_anim_state.duration_, comp_anim_state.reverse_x_);
+        return;
+      }
+
       reverse_x = IsReverseX_(dest_pos_comp.src_pos_, dest_pos_comp.dest_pos_);
       if(undefined !== reverse_x) {
         comp_anim_state.reverse_x_ = reverse_x;
@@ -39,7 +46,6 @@ const SystemAnimation = CES.System.extend({
         comp_anim_state.duration_ += dt;
       }
 
-      comp_texcoord = entity.getComponent('Texcoord');
       comp_texcoord.texcoord_ = comp_anim_state.anim_.GetTextureCoordinate(comp_anim_state.state_, comp_anim_state.duration_, comp_anim_state.reverse_x_);
     });
   }

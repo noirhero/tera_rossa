@@ -37,6 +37,8 @@ const SystemInputKeydown = CES.System.extend({
     }
 
     let dest_pos_comp = null;
+    let temp_dest_pos = vec3.create();
+    const tiles = this.world.getEntities('Tile');
 
     this.world.getEntities('DestPos').some(function(entity) {
       dest_pos_comp = entity.getComponent('DestPos');
@@ -47,6 +49,11 @@ const SystemInputKeydown = CES.System.extend({
         return false;
       }
 
+      vec3.scaleAndAdd(temp_dest_pos, dest_pos_comp.dest_pos_, direction, GTile_size);
+      if(false === TileMap.CanMove(tiles, temp_dest_pos)) {
+        return true;
+      }
+
       dest_pos_comp.delta_ = 0;
       vec3.copy(dest_pos_comp.src_pos_, dest_pos_comp.dest_pos_);
       vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.src_pos_, direction, GTile_size);
@@ -55,7 +62,7 @@ const SystemInputKeydown = CES.System.extend({
     });
 
     //test
-    console.log(`tileMap : ${TileMap.CanMove(this.world.getEntities('Tile'), dest_pos_comp.dest_pos_)}`);
+    console.log(`tileMap : ${TileMap.CanMove(tiles, dest_pos_comp.dest_pos_)}`);
     vec3.set(direction, 0, 0, 0);
   }
 });

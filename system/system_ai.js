@@ -21,6 +21,8 @@ const SystemAI = CES.System.extend({
     }
 
     let dest_pos_comp = null;
+    let temp_dest_pos = vec3.create();
+    const tiles = this.world.getEntities('Tile');
 
     this.world.getEntities('DestPos').forEach(function(entity) {
       if(entity.getComponent('Player')) {
@@ -32,15 +34,21 @@ const SystemAI = CES.System.extend({
         return;
       }
 
+      let is_right_dest_positions = [];
+      const check_directions = [GRightV, GLeftV, GUpV, GDownV];
+      for(let i = 0; i < 4; ++i) {
+        vec3.scaleAndAdd(temp_dest_pos, dest_pos_comp.dest_pos_, check_directions[i], GTile_size);
+        if(true === TileMap.CanMove(tiles, temp_dest_pos)) {
+          is_right_dest_positions[is_right_dest_positions.length] = vec3.fromValues(temp_dest_pos[0], temp_dest_pos[1], temp_dest_pos[2]);
+        }
+      }
+      if(0 === is_right_dest_positions.length) {
+        return;
+      }
+
       dest_pos_comp.delta_ = 0;
       vec3.copy(dest_pos_comp.src_pos_, dest_pos_comp.dest_pos_);
-
-      switch(Math.RangeRandomInt(0, 4)) {
-      case 0: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GRightV, GTile_size); break;
-      case 1: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GLeftV, GTile_size); break;
-      case 2: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GUpV, GTile_size); break;
-      case 3: vec3.scaleAndAdd(dest_pos_comp.dest_pos_, dest_pos_comp.dest_pos_, GDownV, GTile_size); break;
-      }
+      vec3.copy(dest_pos_comp.dest_pos_, is_right_dest_positions[Math.RangeRandomInt(0, is_right_dest_positions.length)]);
     });
   }
 });
