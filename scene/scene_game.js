@@ -16,6 +16,7 @@ class SceneGame extends Scene {
     world.addSystem(new SystemTurn());
     world.addSystem(new SystemAI());
     world.addSystem(new SystemSoundBGM());
+    world.addSystem(new SystemTileMap(context, world));
     world.addSystem(new SystemSoundListener());
     world.addSystem(new SystemMoveSoundEffect());
 
@@ -46,8 +47,8 @@ class SceneGame extends Scene {
     const entity_rossa = new CES.Entity();
     entity_rossa.addComponent(new ComponentPlayer());
     entity_rossa.addComponent(new ComponentScale(60, 90));
-    entity_rossa.addComponent(new ComponentPos(-100, 40));
-    entity_rossa.addComponent(new ComponentDestPos(-100, 40));
+    entity_rossa.addComponent(new ComponentPos(0, 0));
+    entity_rossa.addComponent(new ComponentDestPos(0, 0));
     entity_rossa.addComponent(new ComponentAnimState('data/animation/rossa.json', 'idle', 0, true));
     entity_rossa.addComponent(new ComponentTexture('data/sprite/rossa.png', context.GL));
     entity_rossa.addComponent(new ComponentTexcoord());
@@ -62,7 +63,7 @@ class SceneGame extends Scene {
     entity_sorcerer.addComponent(new ComponentTexcoord());
     entity_sorcerer.addComponent(new ComponentSoundEffect('data/sound/laugh_sorcerer'));
     world.addEntity(entity_sorcerer);
-
+    
     this.DefaultContextStates_();
   }
 
