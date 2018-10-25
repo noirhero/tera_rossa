@@ -32,7 +32,7 @@ class SceneGame extends Scene {
     const entity_arrow = new CES.Entity();
     entity_arrow.addComponent(new ComponentScale(60, 60));
     entity_arrow.addComponent(new ComponentRot(0, 0, 180));
-    entity_arrow.addComponent(new ComponentPos(0, 0, 10));
+    entity_arrow.addComponent(new ComponentPos(0, 0));
     entity_arrow.addComponent(new ComponentTexture('data/texture/arrow.png', context.GL, false));
     entity_arrow.addComponent(new ComponentTexcoord());
     world.addEntity(entity_arrow);
